@@ -9,7 +9,7 @@ namespace Api
 {
     public class Algorithm
     {
-        private static IList<Course> realCoursesData;
+        private static List<Course> realCoursesData;
 
         //to do here: implement the methods we need
         public static void TestAlgorithm()
@@ -23,7 +23,7 @@ namespace Api
             //var courses = MockCourses();
             //var courses = MockCoursesAsInBook();
             var i = 0;
-            var courses = RealCoursesData.TakeWhile(x => i++ < 6).ToList();
+            var courses = AllCoursesData.TakeWhile(x => i++ < 6).ToList();
 
             var scheduler = new Scheduler();
             var allSolutions = scheduler.SolveSssp(courses, constraints);
@@ -40,11 +40,11 @@ namespace Api
             }
         }
 
-        public static IList<Course> RealCoursesData => realCoursesData ?? (realCoursesData = CreateCoursesData());
+        public static List<Course> AllCoursesData => realCoursesData ?? (realCoursesData = CreateCoursesData());
 
-        private static IList<Course> CreateCoursesData()
+        private static List<Course> CreateCoursesData()
         {
-            var path = $"wwwroot\\BraudeCoursesInfo.xlsx";
+            var path = @"wwwroot\BraudeCoursesInfo.xlsx";
             var parser = new CoursesFileParser();
 
             var courses = parser.Parse(path);

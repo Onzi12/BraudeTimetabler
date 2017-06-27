@@ -14,7 +14,7 @@ namespace Api
         private string fileExtension;
         private const string SupportingExcelFileExtensions = ".xls;.xlsx;.xlt;.xlsm;.csv";
 
-        public IList<Course> Parse(string path)
+        public List<Course> Parse(string path)
         {
             this.Contract(path);
 
@@ -27,7 +27,7 @@ namespace Api
             return courses;
         }
 
-        private IList<Course> ParseInternal(DataSet dataSet)
+        private List<Course> ParseInternal(DataSet dataSet)
         {
             var indexes = new ExcelCoursesFileColumnIndexes(dataSet.Tables[0].Columns);
             var dayOfWeekMap = CreateDayOfWeekMap();
@@ -56,7 +56,7 @@ namespace Api
             return courses;
         }
 
-        private IList<Course> CreateCourses(Dictionary<string, List<ParsedCourseRow>> courseIdToRows)
+        private List<Course> CreateCourses(Dictionary<string, List<ParsedCourseRow>> courseIdToRows)
         {
             var courses = new List<Course>(courseIdToRows.Keys.Count);
 

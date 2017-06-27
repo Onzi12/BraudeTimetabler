@@ -5,15 +5,15 @@
       "type": "project",
       "framework": ".NETFramework,Version=v4.5.2",
       "compile": {
-        "bin/Debug/Api.dll": {}
+        "bin/Release/Api.dll": {}
       },
       "runtime": {
         "../packages/ExcelDataReader.2.1.2.3/lib/net45/Excel.dll": {},
         "../packages/SharpZipLib.0.86.0/lib/20/ICSharpCode.SharpZipLib.dll": {},
-        "bin/Debug/Api.dll": {}
+        "bin/Release/Api.dll": {}
       },
       "contentFiles": {
-        "bin/Debug/Api.pdb": {
+        "bin/Release/Api.pdb": {
           "buildAction": "None",
           "codeLanguage": "any",
           "copyToOutput": true

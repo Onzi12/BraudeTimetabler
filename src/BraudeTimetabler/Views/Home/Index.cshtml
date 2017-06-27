@@ -1,0 +1,25 @@
+﻿@model BraudeTimetabler.Models.HomePageModel
+
+<html>
+<head>
+    <title>Onzi Learning MVC.Net</title>
+</head>
+<body>
+<h1>All Courses</h1>
+<p style="margin: auto; text-align: center;">
+    This is the home page.
+    This is the model: 
+    <table dir="rtl" style="margin: auto;" >
+        
+        @foreach (var course in Model.AllCourses)
+        {
+            <tr>
+                <td>@course.Name</td>
+                <td>@course.Id</td>
+            </tr>
+        }
+    </table>
+</p>
+    
+</body>
+</html>

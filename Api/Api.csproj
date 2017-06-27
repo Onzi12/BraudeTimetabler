@@ -60,6 +60,7 @@
     <Compile Include="ExcelFileReader.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="GroupEvent.cs" />
+    <Compile Include="HelperMethods.cs" />
     <Compile Include="MinimumFreeDaysConstraint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scheduler.cs" />
