@@ -28,6 +28,7 @@ namespace BraudeTimetabler
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("<h1 align='center'> Hello World! and Mey :)</h1>");

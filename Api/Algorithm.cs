@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -43,13 +44,11 @@ namespace Api
 
         private static IList<Course> CreateCoursesData()
         {
-            throw new MissingMethodException();
-            //var appDomainAppPath = HttpRuntime.AppDomainAppPath;
-            //var path = $"{appDomainAppPath}App_Data\\BraudeCoursesInfo.xlsx";
-            //var parser = new CoursesFileParser();
-            //var courses = parser.Parse(path);
+            var path = $"wwwroot\\BraudeCoursesInfo.xlsx";
+            var parser = new CoursesFileParser();
 
-            //return courses;
+            var courses = parser.Parse(path);
+            return courses;
         }
 
         private static void PrintSolution(Timetable solution)
