@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "exports": {
+    "Api/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.5.2",
+      "compile": {
+        "bin/Release/Api.dll": {}
+      },
+      "runtime": {
+        "../packages/ExcelDataReader.2.1.2.3/lib/net45/Excel.dll": {},
+        "../packages/SharpZipLib.0.86.0/lib/20/ICSharpCode.SharpZipLib.dll": {},
+        "bin/Release/Api.dll": {}
+      },
+      "contentFiles": {
+        "bin/Release/Api.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    }
+  }
+}
