@@ -1,9 +1,6 @@
-﻿using Api;
-using BraudeTimetabler.Services;
-using BraudeTimetabler.Tutorial;
+﻿using BraudeTimetabler.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +31,6 @@ namespace BraudeTimetabler
         {
             services.AddMvc();
             services.AddSingleton(Configuration);
-            services.AddSingleton<IGreeter, Greeter>();
             services.AddSingleton<ICoursesDataService, InMemoryCoursesDataService>();
         }
 
