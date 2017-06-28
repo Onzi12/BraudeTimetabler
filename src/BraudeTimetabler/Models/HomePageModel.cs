@@ -6,7 +6,7 @@ namespace BraudeTimetabler.Models
     public class HomePageModel
     {
         private List<CourseModel> selectedCourses;
-        public IReadOnlyCollection<CourseModel> AllCourses { get; set; }
+        public IReadOnlyList<CourseModel> AllCourses { get; set; }
 
         public List<CourseModel> SelectedCourses => HelperMethods.GetOrCreate(ref selectedCourses);
     }

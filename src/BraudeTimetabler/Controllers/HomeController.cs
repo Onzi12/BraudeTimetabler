@@ -29,7 +29,14 @@ namespace BraudeTimetabler.Controllers
                 return Content(e.ToString());
             }
 
+            model.SelectedCourses.Add(model.AllCourses[3]);
             return View(model);
+        }
+
+        public IActionResult CourseDetails(string courseId)
+        {
+            var course = this.coursesDataService.Get(courseId);
+            return View(course);
         }
     }
 }

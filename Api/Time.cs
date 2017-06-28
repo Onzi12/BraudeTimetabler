@@ -2,7 +2,7 @@
 
 namespace Api
 {
-    public class Time : IEquatable<Time>
+    public class Time : IEquatable<Time>, IComparable<Time>
     {
         public Time(uint hour, uint minute, uint hourOfDay)
         {
@@ -29,9 +29,15 @@ namespace Api
         public static int TotalSchoolDaysInWeek => 6;
 
         #region Comparison operators And Equals
+
+        public int CompareTo(Time other)
+        {
+            return other == null ? 1 : this.HourOfDay.CompareTo(other.HourOfDay);
+        }
+
         public bool Equals(Time other)
         {
-            return HourOfDay.Equals(other.HourOfDay);
+            return HourOfDay.Equals(other?.HourOfDay);
         }
 
         public override int GetHashCode()

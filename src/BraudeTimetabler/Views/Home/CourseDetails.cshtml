@@ -1,0 +1,44 @@
+﻿@using Api
+@model Api.Course
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<style>
+    .rtl
+    {
+        direction: rtl;
+        margin-right: 10px;
+    }
+</style>
+
+<html>
+<head>
+    <title class="rtl">פרטי הקורס @Model.Name</title>
+</head>
+<body>
+    <h1 class="rtl"><ins>פרטי הקורס @Model.Name</ins></h1>
+
+    @foreach (var classType in Model.ClassTypes)
+    {
+        <hr class="rtl" style="width: 90%; "/>
+        <h2 class="rtl">קבוצות @classType.Type</h2>
+        var i = 1;
+        foreach (var classTypeGroup in classType.Groups)
+        {
+            <p class="rtl">
+                <b>@(i++). מרצה:</b> @classTypeGroup.Lecturer, <b>מספר קבוצה:</b>@classTypeGroup.Id <br />
+            </p>
+
+            foreach (var courseEvent in classTypeGroup.Events)
+             {
+                 <p class="rtl" style="margin-right: 30px">@courseEvent.Day.ToHebrew(), @courseEvent.StartHour-@courseEvent.EndHour, @courseEvent.Room</p>
+             }
+        }
+
+    }
+
+</body>
+</html>

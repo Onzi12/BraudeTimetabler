@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace Api
 {
     [DebuggerDisplay("{Day} {StartHour}-{EndHour} {Room}")]
-    public class GroupEvent
+    public class GroupEvent : IComparable<GroupEvent>
     {
         public GroupEvent(DayOfWeek day, Time startHour, Time endHour, string room)
         {
@@ -44,6 +44,23 @@ namespace Api
         public Course Course
         {
             get; set;
+        }
+
+        public int CompareTo(GroupEvent other)
+        {
+            if (other == null)
+            {
+                return 1;
+            }
+
+            var returnValue = this.Day.CompareTo(other.Day);
+            if (returnValue == 0)
+            {
+                // if same day, decide by start hour
+                returnValue = this.StartHour.CompareTo(other.StartHour);
+            }
+
+            return returnValue;
         }
 
         public override string ToString()

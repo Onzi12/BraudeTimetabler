@@ -105,6 +105,7 @@ namespace Api
 
                         if (courseGroupEvents.Any())
                         {
+                            courseGroupEvents.Sort();
                             var courseGroup = new Group(courseGroupId, lecturer, courseGroupEvents.ToArray());
                             courseGroups.Add(courseGroup);
                         }
