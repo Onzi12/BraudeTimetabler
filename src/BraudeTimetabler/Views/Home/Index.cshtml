@@ -1,42 +1,9 @@
 ﻿@model HomePageViewModel
-     
+
 @{
     ViewBag.Title = "Onzi Learning MVC.Net";
-}                                               
+}   
 
-<div>    
-    <div style="float: right; width: 50%;">
-        <h2>All Courses</h2>
-        <table>
-            @foreach (var course in Model.AllCourses)
-            {
-                <tr>
-                    <td>
-                        <div style="margin-bottom: 5px;">
-                            <a class="btn btn-primary" asp-action="CourseDetails" asp-route-courseId="@course.Id">פרטים</a>
-                            @course.Name
-                        </div>
-                    </td>
-                    <td>@course.Id</td>
-                </tr>
-            }
-        </table>
-    </div>
-    
-    <div style="float: left; width: 50%;">
-        <h2>Selected Courses</h2>
-        <table>
-
-            @foreach (var course in Model.SelectedCourses)
-            {
-                <tr>
-                    <td>
-                        <a class="btn btn-primary" asp-action="CourseDetails" asp-route-courseId="@course.Id">פרטים</a>
-                        @course.Name
-                    </td>
-                    <td>@course.Id</td>
-                </tr>
-            }
-        </table>
-    </div>
+<div>
+      @Html.Partial("OldIndex", Model)
 </div>

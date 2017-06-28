@@ -1,0 +1,84 @@
+
+*{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+input{
+    border-radius: 15px;
+    height:100%;
+    background-color: rgb(220,228,206);
+    font-size: 1em;
+    font-family: 'Lato', sans-serif;
+
+}
+
+td,th,tr{
+    font-family: 'Lato', sans-serif;
+    color: rgb(56, 55, 71); /*font color*/
+
+}
+
+/*-----------iframe Left side--------------*/
+
+.Left-top-height{
+    height:25%; /*30%*/
+}
+
+
+/*----------input boxes-----------------*/
+.stylish-input-group .input-group-addon{
+    background: rgb(220,228,206) !important;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.stylish-input-group .form-control{
+    border-right:0;
+    box-shadow:inset 1px 1px 1px;
+    border-color: rgb(220,228,206);
+    background: rgb(220,228,206);
+    border-radius: 10px;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+
+
+.Left-bottom-container{
+    margin-left: 1.3em;
+    border-radius: 15px;
+    height:100%;
+    background-color:rgb(220,228,206);
+
+}
+
+.highlighted {   background-color: rgb(72,189,161); } /*highlight selected course*/
+
+
+
+/*-----------iframe Middle --------------*/
+.right-dbl-arrw-btn{
+    height: 50px;
+    width: 65px;
+    background-color: transparent;
+    position: absolute;
+    top:50%;
+}
+
+
+.togglBtn{
+    display: none; /*dont show button unless course is highlighted */
+}
+
+
+/*-----------iframe Right side--------------*/
+
+.Right-bottom-container{
+    border-radius: 15px;
+    height:75%;
+    background-color:rgb(220,228,206);
+}
+
+
