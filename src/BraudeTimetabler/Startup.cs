@@ -64,15 +64,11 @@ namespace BraudeTimetabler
 
             app.UseFileServer();
 
+            // add support to External dependencies  like BootStrap & jquery
+            app.UseNodeModules(env.ContentRootPath);
+
             //app.UseMvcWithDefaultRoute();
             app.UseMvc(ConfigureRoutes);
-
-            //app.Run(context => context.Response.WriteAsync("Not found"));
-            //app.Run(async (context) =>
-            //{
-            //    var message = greeter.GetGreeting();
-            //    await context.Response.WriteAsync(message);
-            //});
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)

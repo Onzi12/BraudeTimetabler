@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<style>
+    .rtl {
+        direction: rtl;
+        margin-right: 15px;
+        text-align: right;
+    }
+
+    .marginTop {
+        margin-top: 15px;
+    }
+    .marginRight {
+        margin-right: 15px;
+    }
+</style>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <!-- Css -->
+    <environment names="Development">
+        <link href='https://fonts.google.com/specimen/Lato' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.css"/>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css"/>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css"/>
+    </environment>
+    
+    <environment names="Staging, Production">
+        <!--  my font: Lato -->
+        <link href='https://fonts.google.com/specimen/Lato' rel='stylesheet' type='text/css'>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/node_modules/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only"
+              asp-fallback-test-property="position"
+              asp-fallback-test-value="absolute" />
+
+        <!-- plus a jQuery UI theme -->
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css" />
+	
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" />
+    </environment>
+
+</head>
+<body>
+<div class="container">
+    <div class="rtl">
+    @RenderBody()
+    </div>
+</div>
+
+    <!--Scripts-->
+    <environment names="Development">
+        <!-- jQuery library -->
+        <script src="~/node_modules/jquery/dist/jquery.js"></script>
+
+        <!-- jQuery-ui library -->
+        <script src="~/node_modules/jquery-ui-bundle.1.12.1/jquery-ui.js"></script>
+
+        <!-- jQuery-ui-slider-pips library -->
+        <script src="~/node_modules/jquery-ui-bundle.1.12.1/jquery-ui-slider-pips.js"></script>
+
+        <!-- jQuery-dataTables library -->
+        <script src="~/node_modules/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+
+        <!-- Bootstrap library -->
+        <script src="~/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+        
+        <!-- Data tables styles? library -->
+        <script src="~/node_modules/node_modules/datatables.net/js/dataTables.bootstrap.js"></script>
+    </environment>
+
+    <environment names="Staging, Production">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"
+                asp-fallback-src="~/node_modules/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/jquery-ui.min.js"
+                asp-fallback-src="~/node_modules/jquery-ui-bundle.1.12.1/jquery-ui.min.js"
+                asp-fallback-test="window.jQuery.ui">
+        </script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                asp-fallback-src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-ui-Slider-Pips/1.11.4/jquery-ui-slider-pips.min.js"
+                @*asp-fallback-src="~/node_modules/jquery-ui-bundle.1.12.1/jquery-ui-slider-pips.min.js"
+                asp-fallback-test="" *@>
+        </script>
+
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"
+                asp-fallback-src="~/node_modules/node_modules/datatables.net/js/jquery.dataTables.js"
+                asp-fallback-test="jQuery.fn.dataTable" >
+        </script>
+        
+        <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js">
+        </script>
+
+
+    </environment>
+</body>
+</html>

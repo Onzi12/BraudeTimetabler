@@ -39,7 +39,8 @@
       "wwwroot",
       "web.config",
       "Views",
-      "appsettings.json"
+      "appsettings.json",
+      "node_modules"
     ]
   },
 
