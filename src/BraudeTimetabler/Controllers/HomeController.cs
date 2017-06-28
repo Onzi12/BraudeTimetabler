@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Api;
 using BraudeTimetabler.Models;
 using BraudeTimetabler.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +9,22 @@ namespace BraudeTimetabler.Controllers
     public class HomeController : Controller
     {
         private readonly ICoursesDataService coursesDataService;
+        private HomePageViewModel homePageViewModel;
+
+        private HomePageViewModel HomePageViewModel
+        {
+        get
+            {
+                if (homePageViewModel == null)
+                {
+                    homePageViewModel = new HomePageViewModel();
+                    // make async
+                    homePageViewModel.AllCourses = coursesDataService.GetAllModels();
+                }
+
+                return homePageViewModel;
+            }
+        }
 
         public HomeController(ICoursesDataService coursesDataService)
         {
@@ -22,19 +37,21 @@ namespace BraudeTimetabler.Controllers
                   // Post is for user write operations. 
         public IActionResult Index()
         {
-            var model = new HomePageModel();
+            var model = HomePageViewModel;
 
-            try
+            if (!model.SelectedCourses.Any())
             {
-                model.AllCourses = coursesDataService.GetAllModels();
+                model.SelectedCourses.Add(model.AllCourses[3]);
+                model.SelectedCourses.Add(model.AllCourses[22]);
             }
-            catch (Exception e)
-            {
-                return Content(e.ToString());
-            }
-
-            model.SelectedCourses.Add(model.AllCourses[3]);
+            
             return View(model);
+        }
+
+        [HttpPost] // return from CourseDetails Page
+        public IActionResult CourseDetails()
+        {
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet] // this is get also (user has link and want a page in return)

@@ -12,13 +12,6 @@ namespace Api
                 return null;
             }
 
-            if (str.Length > 5) // 5 is the length of hour:minutes. Example: 08:30
-            {
-                var indexOfParantesis = str.IndexOf(":", StringComparison.InvariantCultureIgnoreCase);
-                str = str.Substring(indexOfParantesis - 2, 5);
-                //str = str.Substring(9, 5); // convert from 12/31/99 08:30:00 (braude format) To our desired format: 08:30
-            }
-
             Time time;
             if (StringToTime.TryGetValue(str, out time))
             {

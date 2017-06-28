@@ -6,10 +6,10 @@ namespace BraudeTimetabler.Services
 {
     public interface ICoursesDataService
     {
-        IReadOnlyList<CourseModel> GetAllModels();
+        IReadOnlyList<CourseViewModel> GetAllModels();
         IReadOnlyList<Course> GetAll();
 
-        CourseModel GetModel(string id);
+        CourseViewModel GetModel(string id);
 
         Course Get(string id);
     }

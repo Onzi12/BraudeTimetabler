@@ -38,6 +38,11 @@ namespace Api
             {
                 var parsedRow = ParseExcelRow(row, indexes, dayOfWeekMap);
 
+                if (parsedRow == null) // can be null if there is no Time info (Day/StartHour/EndHour)
+                {
+                    continue;
+                }
+
                 List<ParsedCourseRow> courseGroups;
                 if (courseIdToRows.TryGetValue(parsedRow.Id, out courseGroups))
                 {
@@ -95,12 +100,9 @@ namespace Api
                             var endHour = groupEvent.EndHour;
                             var room = groupEvent.Room;
 
-                            // we ignore groups who can't be scheduled 
-                            if (day != null && startHour != null)
-                            {
-                                var courseGroupEvent = new GroupEvent((DayOfWeek)day, startHour, endHour, room);
-                                courseGroupEvents.Add(courseGroupEvent);
-                            }
+                            var courseGroupEvent = new GroupEvent(day, startHour, endHour, room);
+                            courseGroupEvents.Add(courseGroupEvent);
+
                         }
 
                         if (courseGroupEvents.Any())
@@ -157,7 +159,24 @@ namespace Api
 
         private ParsedCourseRow ParseExcelRow(DataRow row, ExcelCoursesFileColumnIndexes indexes, IReadOnlyDictionary<string, DayOfWeek?> dayOfWeekMap)
         {
+            var dayOfWeekStr = GetRowValue(row, indexes.DayOfWeek);
+            var dayOfWeek = dayOfWeekMap[dayOfWeekStr];
+            var startHourStr = GetRowTimeValue(row, indexes.StartHour);
+            var startHour = TimeFactory.FromString(startHourStr);
+            var endHourStr = GetRowTimeValue(row, indexes.EndHour);
+            var endHour = TimeFactory.FromString(endHourStr);
+
+            // we ignore groups who can't be scheduled 
+            if (dayOfWeek == null || startHour == null || endHour == null)
+            {
+                return null;
+            }
+
             var parsedRow = new ParsedCourseRow();
+
+            parsedRow.DayOfWeek = (DayOfWeek) dayOfWeek;
+            parsedRow.StartHour = startHour;
+            parsedRow.EndHour = endHour;
 
             parsedRow.Group = GetRowValue(row, indexes.Group);
             parsedRow.SubGroup = GetRowValue(row, indexes.SubGroup);
@@ -168,14 +187,7 @@ namespace Api
 
             parsedRow.Lecturer = GetRowValue(row, indexes.Lecturer);
 
-            var dayOfWeek = GetRowValue(row, indexes.DayOfWeek);
-            parsedRow.DayOfWeek = dayOfWeekMap[dayOfWeek];
 
-            var startHour = GetRowValue(row, indexes.StartHour);
-            parsedRow.StartHour = TimeFactory.FromString(startHour);
-
-            var endHour = GetRowValue(row, indexes.EndHour);
-            parsedRow.EndHour = TimeFactory.FromString(endHour);
 
             parsedRow.Room = GetRowValue(row, indexes.Room);
 
@@ -209,6 +221,18 @@ namespace Api
             return string.Intern(value);
         }
 
+        private string GetRowTimeValue(DataRow row, int index)
+        {
+            var dateTime = row.ItemArray[index] as DateTime?;
+
+            if (dateTime.HasValue)
+            {
+                return string.Intern(dateTime.Value.ToString("HH:mm")); // Format as 08:30
+            }
+
+            return null;
+        }
+
         [DebuggerDisplay("{Id} {ClassType} {Lecturer}")]
         private class ParsedCourseRow
         {
@@ -236,7 +260,7 @@ namespace Api
             {
                 get; set;
             }
-            public DayOfWeek? DayOfWeek
+            public DayOfWeek DayOfWeek
             {
                 get; set;
             }

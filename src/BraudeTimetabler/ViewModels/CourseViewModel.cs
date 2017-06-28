@@ -1,8 +1,8 @@
 ﻿namespace BraudeTimetabler.Models
 {
-    public class CourseModel
+    public class CourseViewModel
     {
-        public CourseModel(string id, string name)
+        public CourseViewModel(string id, string name)
         {
             this.Id = id;
             Name = name;

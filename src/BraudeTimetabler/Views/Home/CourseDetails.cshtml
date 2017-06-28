@@ -18,7 +18,14 @@
 </head>
 <body>
     <div class="rtl">
-        <a asp-action="Index">חזור</a>
+        <div>
+            <a asp-action="@nameof(HomeController.Index)">חזור</a>
+            <a href="javascript:window.history.back()">חזור מג'אוהסקריפט</a>
+            <form method="post" asp-action="@nameof(HomeController.CourseDetails)">
+                <input type="submit" value="חזור מהפורם" />
+            </form>
+        </div>
+
 
         <h1>
             <ins>פרטי הקורס @Model.Name</ins>
@@ -26,7 +33,7 @@
 
         @foreach (var classType in Model.ClassTypes)
         {
-            <hr style="width: 70%; text-align:right; margin-right: 0;" />
+            <hr style="width: 70%; text-align: right; margin-right: 0;" />
             <h2>קבוצות @classType.Type</h2>
             var i = 1;
             foreach (var classTypeGroup in classType.Groups)
@@ -37,7 +44,7 @@
 
                 foreach (var courseEvent in classTypeGroup.Events)
                 {
-                    <p style="margin-right: 30px">@courseEvent.Day.ToHebrew(), @courseEvent.StartHour-@courseEvent.EndHour, @courseEvent.Room</p>
+                    <p style="margin-right: 30px">@courseEvent.Day.ToHebrew(), מ @courseEvent.StartHour עד @courseEvent.EndHour, ב @courseEvent.Room</p>
                 }
             }
 

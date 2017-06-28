@@ -47,18 +47,20 @@ namespace BraudeTimetabler
         {
             loggerFactory.AddConsole();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                //app.UseExceptionHandler("/error");
-                app.UseExceptionHandler(new ExceptionHandlerOptions()
-                {
-                    ExceptionHandler = context => context.Response.WriteAsync("Opps!")
-                });
-            }
+            app.UseDeveloperExceptionPage();
+
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            //    //app.UseExceptionHandler("/error");
+            //    app.UseExceptionHandler(new ExceptionHandlerOptions()
+            //    {
+            //        ExceptionHandler = context => context.Response.WriteAsync("Opps!")
+            //    });
+            //}
 
             app.UseFileServer();
 
