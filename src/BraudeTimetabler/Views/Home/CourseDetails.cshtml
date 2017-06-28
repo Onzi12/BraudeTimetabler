@@ -1,5 +1,4 @@
-﻿@using Api
-@model Api.Course
+﻿@model Course
 
 @{
     Layout = null;
@@ -7,8 +6,7 @@
 
 <!DOCTYPE html>
 <style>
-    .rtl
-    {
+    .rtl {
         direction: rtl;
         margin-right: 10px;
     }
@@ -19,26 +17,31 @@
     <title class="rtl">פרטי הקורס @Model.Name</title>
 </head>
 <body>
-    <h1 class="rtl"><ins>פרטי הקורס @Model.Name</ins></h1>
+    <div class="rtl">
+        <a asp-action="Index">חזור</a>
 
-    @foreach (var classType in Model.ClassTypes)
-    {
-        <hr class="rtl" style="width: 90%; "/>
-        <h2 class="rtl">קבוצות @classType.Type</h2>
-        var i = 1;
-        foreach (var classTypeGroup in classType.Groups)
+        <h1>
+            <ins>פרטי הקורס @Model.Name</ins>
+        </h1>
+
+        @foreach (var classType in Model.ClassTypes)
         {
-            <p class="rtl">
-                <b>@(i++). מרצה:</b> @classTypeGroup.Lecturer, <b>מספר קבוצה:</b>@classTypeGroup.Id <br />
-            </p>
+            <hr style="width: 70%; text-align:right; margin-right: 0;" />
+            <h2>קבוצות @classType.Type</h2>
+            var i = 1;
+            foreach (var classTypeGroup in classType.Groups)
+            {
+                <p>
+                    <b>@(i++). מרצה:</b> @classTypeGroup.Lecturer, <b>מספר קבוצה:</b>@classTypeGroup.Id <br />
+                </p>
 
-            foreach (var courseEvent in classTypeGroup.Events)
-             {
-                 <p class="rtl" style="margin-right: 30px">@courseEvent.Day.ToHebrew(), @courseEvent.StartHour-@courseEvent.EndHour, @courseEvent.Room</p>
-             }
+                foreach (var courseEvent in classTypeGroup.Events)
+                {
+                    <p style="margin-right: 30px">@courseEvent.Day.ToHebrew(), @courseEvent.StartHour-@courseEvent.EndHour, @courseEvent.Room</p>
+                }
+            }
+
         }
-
-    }
-
+    </div>
 </body>
 </html>

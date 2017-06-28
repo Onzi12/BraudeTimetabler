@@ -1,41 +1,49 @@
-﻿@model BraudeTimetabler.Models.HomePageModel
+﻿@model HomePageModel
 
 <html>
 <head>
     <title>Onzi Learning MVC.Net</title>
 </head>
 <body>
-<h1 style="text-align: center">All Courses</h1>
-<div>
-    <table dir="rtl" style="float: right; width: 50%;" >
-        
-        @foreach (var course in Model.AllCourses)
-        {
-            <tr>
-                <td>
-                    @*<a href="/Home/CourseDetails/@course.Id">Details</a>*@
-                    @Html.ActionLink("פרטים", "CourseDetails", new {courseId = course.Id})
-                    @course.Name
-                </td>
-                <td>@course.Id</td>
-            </tr>
-        }
-    </table>
-    
-    <table dir="rtl" style="float: left; width: 50%;">
+    <h1 style="text-align: center">All Courses</h1>
+    <div>
+        <table dir="rtl" style="float: right; width: 50%;">
 
-        @foreach (var course in Model.SelectedCourses)
-        {
-            <tr>
-                
-                <td>
-                    @Html.ActionLink("פרטים","CourseDetails", new {courseId = course.Id})
-                    @course.Name
-                </td>
-                <td>@course.Id</td>
-            </tr>
-        }
-    </table>
-</div>
+            @foreach (var course in Model.AllCourses)
+            {
+                <tr>
+                    <td>
+                        @*3 Options for links:*@
+                        @*<a href="/Home/CourseDetails/@course.Id">Details</a>*@
+                        @*@Html.ActionLink("פרטים", nameof(HomeController.CourseDetails), new
+                        {
+                            courseId = course.Id
+                        })*@
+                        <a asp-action="CourseDetails" asp-route-courseId="@course.Id" >פרטים</a>
+                        @course.Name
+                    </td>
+                    <td>@course.Id</td>
+                </tr>
+            }
+        </table>
+
+        <table dir="rtl" style="float: left; width: 50%;">
+
+            @foreach (var course in Model.SelectedCourses)
+            {
+                <tr>
+
+                    <td>
+                        @Html.ActionLink("פרטים", nameof(HomeController.CourseDetails), new
+               {
+                   courseId = course.Id
+               })
+                        @course.Name
+                    </td>
+                    <td>@course.Id</td>
+                </tr>
+            }
+        </table>
+    </div>
 </body>
 </html>
