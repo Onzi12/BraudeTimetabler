@@ -62,7 +62,7 @@
         <script src="~/node_modules/jquery-ui-bundle.1.12.1/jquery-ui.js"></script>
 
         <!-- jQuery-ui-slider-pips library -->
-        <script src="~/node_modules/jquery-ui-bundle.1.12.1/jquery-ui-slider-pips.js"></script>
+        <script src="ClientSide/Scripts/jquery-ui-slider-pips.js"></script>
 
         <!-- jQuery-dataTables library -->
         <script src="~/node_modules/datatables.net/js/jquery.dataTables.js"></script>
@@ -71,7 +71,7 @@
         <script src="~/node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
         <!-- Data tables styles? library -->
-        <script src="~/node_modules/datatables.net/js/dataTables.bootstrap.js"></script>
+        <script src="ClientSide/Scripts/dataTables.bootstrap.js"></script>
     </environment>
 
     <environment names="Staging, Production">
@@ -91,8 +91,8 @@
         </script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-ui-Slider-Pips/1.11.4/jquery-ui-slider-pips.min.js"
-                @*asp-fallback-src="~/node_modules/jquery-ui-bundle.1.12.1/jquery-ui-slider-pips.min.js"
-                asp-fallback-test="" *@>
+                asp-fallback-src="ClientSide/Scripts/jquery-ui-slider-pips.min.js"
+                >
         </script>
 
         <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"
@@ -100,7 +100,8 @@
                 asp-fallback-test="jQuery.fn.dataTable">
         </script>
 
-        <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js">
+        <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"
+                asp-fallback-src="ClientSide/Scripts/dataTables.bootstrap.min.js">
         </script>
 
 
