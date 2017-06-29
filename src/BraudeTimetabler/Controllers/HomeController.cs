@@ -1,5 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Api;
 using BraudeTimetabler.Models;
 using BraudeTimetabler.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +31,11 @@ namespace BraudeTimetabler.Controllers
         {
             this.coursesDataService = coursesDataService;
         }
+
+        //public IActionResult Try()
+        //{
+        //    return new JavaScriptSerializer().Serialize(coursesDataService.GetAllModels());
+        //}
 
         [HttpGet] // when user wants to get a page
                   // FurtherMore: 
@@ -63,19 +69,39 @@ namespace BraudeTimetabler.Controllers
 
         // Post - ReDirect - Get Pattern => To avoid forms re-submissions
         [HttpPost]
-        [ValidateAntiForgeryToken] // validate that the form arrived after a valid get request
-        public IActionResult PostReDirectGetExample(string courseId)
+        public IActionResult PostReDirectGetExample(AlgorithmInputsViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var scheduler = new Scheduler();
+                var selectedCourses = new List<Course>();
+                
+                //foreach (var id in model.Ids)
+                //{
+                //    var course = coursesDataService.Get(id);
+                //    selectedCourses.Add(course);
+                //}
+
+                selectedCourses.Add(coursesDataService.Get("11001"));
+                selectedCourses.Add(coursesDataService.Get("11003"));
+                var constraints = new ConstraintsCollection();
+                var minFreeDaysConstraint = new MinimumFreeDaysConstraint(model.FreeDays);
+                var clashesConstraint = new ClashesConstraint(model.Clashes);
+                constraints.Add(minFreeDaysConstraint);
+                constraints.Add(clashesConstraint);
+
+                var solution = scheduler.SolveSssp(selectedCourses, constraints);
+
+                var response = solution.Select(s => s.ExportToJason()).FirstOrDefault();
+                return Json(response);
                 // do things with data...
 
                 // ReDirect To a HttpGet Action After a successful post operation.
-                return RedirectToAction(nameof(CourseDetails), new { courseId });
+                //return RedirectToAction(nameof(CourseDetails), new { courseId });
             }
-
+            return null;
             // else, return the form with user previous entered values
-            return View();
+            //return View();
         }
     }
 }

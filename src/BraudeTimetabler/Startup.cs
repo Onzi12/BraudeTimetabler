@@ -57,7 +57,6 @@ namespace BraudeTimetabler
             //        ExceptionHandler = context => context.Response.WriteAsync("Opps!")
             //    });
             //}
-
             app.UseFileServer();
 
             // add support to External dependencies  like BootStrap & jquery

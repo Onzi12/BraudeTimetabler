@@ -2,7 +2,7 @@
  * Created by ASUS_TF on 17/6/2017.
  */
 
-var allCourses= {};
+//var allCourses= {};
 var selectedCourse;
 var tableRow;
 var selectedCoursesList = [];
@@ -10,23 +10,23 @@ var removeCrs;
 
 $(document).ready(function() {
 
-    $.getJSON("http://localhost/databaseMock.php",
-        function (data) {
-            allCourses.data = data;
-            var tbl_body = document.createElement("tbody");  // create a new table
-            tbl_body.id = "rtbody";
-            $.each(data, function () {
-                var tbl_row = tbl_body.insertRow();
-                tbl_row.className = "tbl-row";
-                $.each(this, function (k, v) {
-                    var cell = tbl_row.insertCell();
-                    cell.appendChild(document.createTextNode(v.toString()));
-                })
+    // $.getJSON("http://localhost/databaseMock.php",
+    //    function (data) {
+    //        allCourses.data = data;
+    //        var tbl_body = document.createElement("tbody");  // create a new table
+    //        tbl_body.id = "rtbody";
+    //        $.each(data, function () {
+    //            var tbl_row = tbl_body.insertRow();
+    //            tbl_row.className = "tbl-row";
+    //            $.each(this, function (k, v) {
+    //                var cell = tbl_row.insertCell();
+    //                cell.appendChild(document.createTextNode(v.toString()));
+    //            })
 
-            })
+    //        })
 
-            document.getElementById("coursesDataBaseTbl").appendChild(tbl_body);
-        });
+    //        document.getElementById("coursesDataBaseTbl").appendChild(tbl_body);
+    //    });
 
 
     $('#textInput').keyup(function () {
@@ -84,7 +84,7 @@ $(document).ready(function() {
 
 
 
-        var newCourseId = tableRow[0].childNodes[1].innerText;
+        var newCourseId = tableRow.cells.namedItem("tableCourseId").innerHTML;
         selectedCoursesList.push(newCourseId);
 
         //remove from table
