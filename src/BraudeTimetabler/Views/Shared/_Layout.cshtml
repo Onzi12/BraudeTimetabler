@@ -1,6 +1,6 @@
 ﻿
 <!DOCTYPE html>
-<style>
+@*<style>
     .rtl {
         direction: rtl;
         margin-right: 15px;
@@ -14,14 +14,80 @@
     .marginRight {
         margin-right: 15px;
     }
-</style>
 
+    .content-margin {
+        margin-top: 44px;
+        margin-left: 25px;
+    }
+
+
+
+    .black-background {
+        background-color: #383747;
+    }
+
+    #topYellowContainer {
+        position: absolute;
+        left: 0.8%;
+        top: 0.8%;
+        width: 98.5%;
+        height: 98.5%;
+        margin: auto;
+        border-radius: 30px;
+        background-color: #ffd85e;
+    }
+
+    .logo {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-height: 5%;
+        max-height: 100px;
+    }
+
+    .bottom-navigation-container {
+        position: absolute;
+        bottom: 25px;
+    }
+
+
+</style>*@
+<style>
+
+     html, body {    
+         height: 100%;
+         width: 100%;
+         /*overflow: hidden;*/
+         /*margin: 0;*/
+     }
+    
+
+    .vertical-align {
+        position: relative;
+        top: 50%;
+    }
+    /*
+ * Row with equal height columns
+ * --------------------------------------------------
+ */
+    .row-eq-height {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display:         flex;
+    }
+
+
+    .max-height {
+        height: 100%;
+    }
+</style>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width , initial-scale=1"/>
+    <meta name="viewport" content="width=device-width"/>
     <title>@ViewBag.Title</title>
 
-    <link rel="stylesheet" href="ClientSide/Css/home.css">
+    @*<link rel="stylesheet" href="ClientSide/Css/home.css">*@
     <link rel="stylesheet" href="ClientSide/Css/searchCourses.css">
     <link rel="stylesheet" href="ClientSide/Css/constraints.css">
     <link rel="stylesheet" href="ClientSide/Css/jquery-ui-slider-pips.css">
@@ -46,12 +112,40 @@
               asp-fallback-test-property="position"
               asp-fallback-test-value="absolute" />
     </environment>
-
+    @*<link rel="stylesheet" href="ClientSide/Css/black-theme-bootstrap.min.css">*@
 </head>
 <body>
-        <div>
-            @RenderBody()
+
+ 
+    <div class="container-fluid max-height">
+        <div class="row row-eq-height max-height">
+
+            <div class="col-sm-1  hidden-xs vertical-align">
+                <a onclick="plusSlides(-1)">&#10094;</a>
+            </div>
+
+            <div class="col-xs-12 col-sm-10 max-height">
+                <div class="row" style="height: 10%; min-height: 50px">
+                    <div class="col-xs-2 col-xs-offset-5 max-height" style="background-color: blue;">
+                        <img class="img-responsive"src="ClientSide/Images/decore/logo.png"/>
+                    </div>
+                </div>
+                <div class="row max-height">
+                    @RenderBody()
+                </div>
+                
+            </div>
+
+            <div class="col-sm-1 hidden-xs vertical-align">
+                <a onclick="plusSlides(2)">&#10095;</a>
+            </div>
+
+
         </div>
+
+
+    </div>
+
 
     <!--Scripts-->
     <environment names="Development">
@@ -91,8 +185,7 @@
         </script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-ui-Slider-Pips/1.11.4/jquery-ui-slider-pips.min.js"
-                asp-fallback-src="ClientSide/Scripts/jquery-ui-slider-pips.min.js"
-                >
+                asp-fallback-src="ClientSide/Scripts/jquery-ui-slider-pips.min.js">
         </script>
 
         <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"
@@ -128,8 +221,12 @@
             var i, j;
             var slides = document.getElementsByClassName("mySlides");
             var dots = document.getElementsByClassName("dot");
-            if (n > slides.length) { slideIndex = 1 }
-            if (n < 1) { slideIndex = slides.length }
+            if (n > slides.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = slides.length
+            }
             for (i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
             }
@@ -160,19 +257,41 @@
                     function (data, status) {
                         $data = $.parseJSON(data);
 
-                        $.each($data, function (i, item) {
-                            $c = "";
-                            $c += "<tr><td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" + item.startHour + "</td>";
-                            $c += "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" + item.sunday + "</td>";
-                            $c += "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" + item.monday + "</td>";
-                            $c += "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" + item.tuesday + "</td>";
-                            $c += "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" + item.wednesday + "</td>";
-                            $c += "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" + item.thursday + "</td>";
-                            $c += "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" + item.friday + "</td></tr>";
+                        $.each($data,
+                            function (i, item) {
+                                $c = "";
+                                $c +=
+                                    "<tr><td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
+                                    item.startHour +
+                                    "</td>";
+                                $c +=
+                                    "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
+                                    item.sunday +
+                                    "</td>";
+                                $c +=
+                                    "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
+                                    item.monday +
+                                    "</td>";
+                                $c +=
+                                    "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
+                                    item.tuesday +
+                                    "</td>";
+                                $c +=
+                                    "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
+                                    item.wednesday +
+                                    "</td>";
+                                $c +=
+                                    "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
+                                    item.thursday +
+                                    "</td>";
+                                $c +=
+                                    "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
+                                    item.friday +
+                                    "</td></tr>";
 
-                            $('#timetablesTbl').find('tbody').append($c);
+                                $('#timetablesTbl').find('tbody').append($c);
 
-                        });
+                            });
 
                     });
 

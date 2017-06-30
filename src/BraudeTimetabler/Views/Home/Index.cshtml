@@ -2,205 +2,182 @@
 
 @{
     ViewBag.Title = "Braude Timetabler";
-}   
+}
+<div class="slideshow-container" style="height: 100%">
 
-<div>
-    <div class="dark-background">
-        <div class= "container-fluid yellow-screen " >
-            <div class="row" style="height: 10%" >
-                <div class="col-xs-4 col-xs-offset-4" style="height:100%"  >
-                    <img src="ClientSide/Images/decore/logo.png" class="img-responsive center-block" style="height:100%"   >
-                </div>
-            </div>
-            <div class="row" style="height:80%">
-                <div class="col-xs-12" style="height: 100%">
-                    <div class="slideshow-container" style="height: 100%">
-
-                        <!-- ------------------- SEARCH COURSES --------------------- -->
-                        <div class="mySlides " style="height: 100%">
-                            <div id="slide1" style="height: 100%">
-                                <div class="row" style="height: 100%">
-                                    <div class="col-xs-7 col-md-7 " style="height: 100%"> <!--  left side -->
+    <!-- ------------------- SEARCH COURSES --------------------- -->
+    @*<div class="mySlides " style="height: 100%">
+            <div id="slide1" style="height: 100%">
+                <div class="row" style="height: 100%">
+                    <div class="col-xs-7 col-md-7 " style="height: 100%">
+                        <!--  left side -->
+                        <div class="row" style="height: 100%">
+                            <div class="col-xs-9" style="height: 100%">
+                                <div class="row" id="top" style="height: 25%">
+                                    <div class="col-xs-12 " style="height: 100%">
                                         <div class="row" style="height: 100%">
-                                            <div class="col-xs-9" style="height: 100%">
-                                                <div class="row" id="top" style="height: 25%">
-                                                    <div class="col-xs-12 " style="height: 100%">
-                                                        <div class="row" style="height: 100%" >
-                                                            <div class="col-xs-9 col-xs-offset-1 "  style="height: 100%">
-                                                                <img src="ClientSide/Images/decore/search.png" class="img-responsive ">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" id="inputBoxes" style="height:30%; position: relative; top: -40%;">
-                                                            <div class="col-xs-8  col-xs-offset-2" style="height: 100%">
-                                                                <div class="input-group stylish-input-group" style="height: 100%">
-                                                                    <input class="form-control" id= "textInput" placeholder="course Name \ Id" style="height: 100%">
-                                                                    <span class="input-group-addon" style="height: 100%">
-                                                                        <button type="submit">
-                                                                            <span class="glyphicon glyphicon-search" style="height: 100%"></span>
-                                                                        </button>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row" id="bottom" style="height: 75%">
-                                                    <div class="col-xs-8 col-xs-offset-2 Left-bottom-container ">
-                                                        <div class="table-responsive" style="height: inherit; overflow-y: scroll;">
-                                                            <table class="table" id="coursesDataBaseTbl">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th class="tbl-header">Course Name</th>
-                                                                    <th class="tbl-header">Course Id</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach (var course in Model.AllCourses)
-                                                                    {
-                                                                        <tr class="tbl-row">
-                                                                            <td>@course.Name</td>
-                                                                            <td id="tableCourseId">@course.Id</td>
-                                                                        </tr>
-                                                                    }
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-3 col-height">
-                                                <input type="image" id="selectCourseBtn" src="ClientSide/Images/buttons/right_double_arrow.png"
-                                                       class="img-responsive right-dbl-arrw-btn " style="display:none; position: relative; top: 300px;">
-                                                <input type="image" id="removeCourseBtn" src="ClientSide/Images/buttons/left_double_arrow.png"
-                                                       class="  img-responsive right-dbl-arrw-btn " style="display:none; position: relative; top: 350px;">
+                                            <div class="col-xs-9 col-xs-offset-1 " style="height: 100%">
+                                                <img src="ClientSide/Images/decore/search.png" class="img-responsive ">
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xs-5 col-md-5 " style="height: 100%">  <!--  right side -->
-                                        <div class="row" style="height: 20%">
-                                            <div class="col-xs-9 col-xs-offset-1 ">
-                                                <img src="ClientSide/Images/decore/selected.png" class="img-responsive" style=" margin-bottom: 3%">
-                                            </div>
-                                        </div>
-                                        <div class="row" style="height: 80%">
-                                            <div class="col-xs-10 Right-bottom-container" style="height: 100%">
-                                                <div class="table-responsive" style="overflow-y: scroll; height: inherit ">
-                                                    <table class="table" id="slctdTbl">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="tbl-header">Course Name</th>
-                                                            <th class="tbl-header">Course Id</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody>
-                                                    </table>
+                                        <div class="row" id="inputBoxes" style="height:30%; position: relative; top: -40%;">
+                                            <div class="col-xs-8  col-xs-offset-2" style="height: 100%">
+                                                <div class="input-group stylish-input-group" style="height: 100%">
+                                                    <input class="form-control" id="textInput" placeholder="course Name \ Id" style="height: 100%">
+                                                    <span class="input-group-addon" style="height: 100%">
+                                                        <button type="submit">
+                                                            <span class="glyphicon glyphicon-search" style="height: 100%"></span>
+                                                        </button>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <!-- ------------------- CONSTRAINTS --------------------- -->
-                        <div class="mySlides" style="height: 100%">
-                            <div id="slide2" style="height: 100%">
-                                <br>
-                                <br>
-                                <div class="row" style="height: 20%">
-                                    <div class="col-xs-8 col-md-8 col-lg-8 col-xs-offset-1 col-md-offset-1 col-lg-offset-1" style="height: 100%">
-                                        <img src="ClientSide/Images/decore/clashes.png" class="img-responsive"
-                                             style="display: inline-block; height: 90%">
-                                        <span class="flatCheckBox" style="display: inline-block;  ">
-                                            <input type="checkbox" value="None" id="flatCheckBox" name="check"  />
-                                            <label for="flatCheckBox"></label>
-                                        </span>
-
-                                    </div>
-
-                                </div>
-                                <div class="row" style="height: 20%">
-                                    <div class="col-xs-12" style="height: 100%">
-                                        <div class="row" style="height: 100%">
-                                            <div class="col-xs-6 col-md-6 col-lg-6 col-xs-offset-1 col-md-offset-1 col-lg-offset-1 " style="height: 100%">
-                                                <img src="ClientSide/Images/decore/freeDays.png" class="img-responsive" style="height: 100%">
-                                            </div>
-                                            <div class="col-xs-3 col-md-3 col-lg-3 " style="position: relative; top: 40%" >
-                                                <div class="slider" id="freeDays"></div>
-                                                <br>
-                                                <br>
-                                                <br>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" style="height: 25%">
-                                    <div class="col-xs-12" style="height: 100%">
-                                        <div class="row" style="height: 100%">
-                                            <div class="col-xs-6 col-md-6 col-lg-6 col-xs-offset-1 col-md-offset-1 col-lg-offset-1 " style="height: 100%">
-                                                <img src="ClientSide/Images/decore/maxGap.png" class="img-responsive" style="height: 100%">
-                                            </div>
-                                            <div class="col-xs-3 col-md-3 col-lg-3 " style="position: relative; top: 40%" >
-                                                <div class="slider" id="maxGap"></div>
-                                                <br>
-                                                <br>
-                                                <br>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- ------------------TIMETABLES----------------- -->
-                        <div class="mySlides" style="height: 100%">
-                            <div id="slide3" style="height: 100%">
-                                <br>
-                                <br>
-                                <div class="row" style="height: inherit">
-                                    <div class="col-xs-10  col-xs-offset-1 col-height Right-bottom-container" style="height: 90%">
-                                        <div class="table-responsive" style="height: 100%; overflow-y: scroll">
-                                            <table class="table" id="timetablesTbl">
+                                <div class="row" id="bottom" style="height: 75%">
+                                    <div class="col-xs-8 col-xs-offset-2 Left-bottom-container ">
+                                        <div class="table-responsive" style="height: inherit; overflow-y: scroll;">
+                                            <table class="table" id="coursesDataBaseTbl">
                                                 <thead>
                                                 <tr>
-                                                    <th></th>
-                                                    <th class="tbl-header">Hours</th>
-                                                    <th class="tbl-header">Sunday</th>
-                                                    <th class="tbl-header">Monday</th>
-                                                    <th class="tbl-header">Tuesday</th>
-                                                    <th class="tbl-header">Wednesday</th>
-                                                    <th class="tbl-header">Thursday</th>
-                                                    <th class="tbl-header">Friday</th>
+                                                    <th class="tbl-header">Course Name</th>
+                                                    <th class="tbl-header">Course Id</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
+                                                @foreach (var course in Model.AllCourses)
+                                                {
+                                                    <tr class="tbl-row">
+                                                        <td>@course.Name</td>
+                                                        <td id="tableCourseId">@course.Id</td>
+                                                    </tr>
+                                                }
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="col-xs-3 col-height">
+                                <input type="image" id="selectCourseBtn" src="ClientSide/Images/buttons/right_double_arrow.png"
+                                       class="img-responsive right-dbl-arrw-btn " style="display:none; position: relative; top: 300px;">
+                                <input type="image" id="removeCourseBtn" src="ClientSide/Images/buttons/left_double_arrow.png"
+                                       class=" img-responsive right-dbl-arrw-btn " style="display:none; position: relative; top: 350px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-5 col-md-5 " style="height: 100%">
+                        <!--  right side -->
+                        <div class="row" style="height: 20%">
+                            <div class="col-xs-9 col-xs-offset-1 ">
+                                <img src="ClientSide/Images/decore/selected.png" class="img-responsive" style=" margin-bottom: 3%">
+                            </div>
+                        </div>
+                        <div class="row" style="height: 80%">
+                            <div class="col-xs-10 Right-bottom-container" style="height: 100%">
+                                <div class="table-responsive" style="overflow-y: scroll; height: inherit ">
+                                    <table class="table" id="slctdTbl">
+                                        <thead>
+                                        <tr>
+                                            <th class="tbl-header">Course Name</th>
+                                            <th class="tbl-header">Course Id</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <br>
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="next" onclick="plusSlides(1)">&#10095;</a>
-            <div class="row"  >
-                <div class="col-xs-12" style="position: absolute; bottom:3%">
-                    <div class="row">
-                        <div class="col-xs-2 col-xs-offset-5" style="padding-left:50px; position: absolute; bottom:0; ">
-                            <span class="dot" onclick="currentSlide(1)"></span>
-                            <span class="dot" onclick="currentSlide(2)"></span>
-                            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>*@
+    <!-- ------------------- CONSTRAINTS --------------------- -->
+    <div class="mySlides">
+        <div id="slide2">
+            @*<div class="form-group"></div>*@
+
+            <label style="font-size: 50px">Allow Clashes <input type="checkbox" value="" id="flatCheckBox" style="height: 30px; width: 30px;" name="check"></label>
+            <div class="row row-eq-height">
+                
+                <div class="col-xs-3">
+                    <label style="font-size: 50px" class="constraint-label">Max Gap:</label>
+                </div>
+                <div class="col-xs-6" >
+                    <div class="slider" id="maxGap">
+                    </div>
+                
+                </div>
+                <div class="col-xs-3"></div>
+            </div>
+            <div class="row"></div>
+            @*<div class="row" style="height: 20%">
+                    <div class="col-xs-12" style="height: 100%">
+                        <div class="row" style="height: 100%">
+                            <div class="col-xs-6 col-md-6 col-lg-6 col-xs-offset-1 col-md-offset-1 col-lg-offset-1 " style="height: 100%">
+                                <img src="ClientSide/Images/decore/freeDays.png" class="img-responsive" style="height: 100%">
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3 " style="position: relative; top: 40%">
+                                <div class="slider" id="freeDays"></div>
+                                <br>
+                                <br>
+                                <br>
+                            </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row" style="height: 25%">
+                    <div class="col-xs-12" style="height: 100%">
+                        <div class="row" style="height: 100%">
+                            <div class="col-xs-6 col-md-6 col-lg-6 col-xs-offset-1 col-md-offset-1 col-lg-offset-1 " style="height: 100%">
+                                <img src="ClientSide/Images/decore/maxGap.png" class="img-responsive" style="height: 100%">
+                            </div>
+                            <div class="col-xs-3 col-md-3 col-lg-3 " style="position: relative; top: 40%">
+                                <div class="slider" id="maxGap"></div>
+                                <br>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<!-- ------------------TIMETABLES----------------- -->
+@*<div class="mySlides" style="height: 100%">
+                    <div id="slide3" style="height: 100%">
+                        <br>
+                        <br>
+                        <div class="row" style="height: inherit">
+                            <div class="col-xs-10  col-xs-offset-1 col-height Right-bottom-container" style="height: 90%">
+                                <div class="table-responsive" style="height: 100%; overflow-y: scroll">
+                                    <table class="table" id="timetablesTbl">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th class="tbl-header">Hours</th>
+                                            <th class="tbl-header">Sunday</th>
+                                            <th class="tbl-header">Monday</th>
+                                            <th class="tbl-header">Tuesday</th>
+                                            <th class="tbl-header">Wednesday</th>
+                                            <th class="tbl-header">Thursday</th>
+                                            <th class="tbl-header">Friday</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+    <br>*@
 
-</div>
+

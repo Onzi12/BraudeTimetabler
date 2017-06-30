@@ -1,0 +1,251 @@
+﻿<style>
+    html, body, .max-height {
+        height: 100%;
+    }
+
+    .row-eq-height {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+    }
+
+    .vertical-align, #next, #prev{
+        position: relative;
+        top: 50%;
+    }
+
+    .gly {
+        vertical-align: middle;
+        text-align: center;
+        font-size: 50px;
+    }
+
+    blue{ color: blue;}
+</style>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>On And Mey</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="ClientSide/Css/jquery-ui-slider-pips.css">
+    <!--  my font: Lato -->
+    <link rel='stylesheet' type='text/css' href='https://fonts.google.com/specimen/Lato'>
+    <!-- plus a jQuery UI theme -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css" />
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="ClientSide/Css/searchCourses.css">
+    <link rel="stylesheet" href="ClientSide/Css/constraints.css">
+</head>
+<body>
+    <div class="container-fluid max-height">
+        <div class="row max-height">
+
+            <!-- Left Arrow Navigation -->
+            <div class="col-sm-1 hidden-xs gly max-height">
+                <span id="prev" class="glyphicon  glyphicon-chevron-left  vertical-align" onclick="plusSlides(-1)"></span>
+            </div>
+
+            <!-- Middle Area -->
+            <div class="col-sm-10 max-height">
+
+                <!-- Logo -->
+                <div class="row" style="height: 10%;">
+                    <img class="max-height center-block " src="ClientSide/Images/decore/logo.png">
+                </div>
+
+                <!-- Content Area -->
+                <div class="row" style="height: 80%;">
+                    @RenderBody()
+                </div>
+
+                <!-- Main Area Footer -->
+                <div class="row" style="height: 10%;">
+                    <!-- Buttom Navigation Buttons -->
+                    <div class="btn-group btn-group-justified max-height">
+                        <a class="btn btn-primary " onclick="currentSlide(1)">Select Courses</a>
+                        <a class="btn btn-primary" onclick="currentSlide(2)">Choose Constraints</a>
+                        <a class="btn btn-primary" onclick="currentSlide(3)">Generate Timetables</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Arrow Navigation -->
+            <div class="col-sm-1 hidden-xs gly max-height">
+                <span id="next" class="glyphicon  glyphicon-chevron-right  vertical-align" onclick="plusSlides(1)"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Scripts-->
+    <environment names="Development">
+        <!-- jQuery library -->
+        <script src="~/node_modules/jquery/dist/jquery.js"></script>
+
+        <!-- jQuery-ui library -->
+        <script src="~/node_modules/jquery-ui-bundle.1.12.1/jquery-ui.js"></script>
+
+        <!-- jQuery-ui-slider-pips library -->
+        <script src="ClientSide/Scripts/jquery-ui-slider-pips.js"></script>
+
+        <!-- jQuery-dataTables library -->
+        <script src="~/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+
+        <!-- Bootstrap library -->
+        <script src="~/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+
+        <!-- Data tables styles? library -->
+        <script src="ClientSide/Scripts/dataTables.bootstrap.js"></script>
+    </environment>
+
+    <environment names="Staging, Production">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"
+                asp-fallback-src="~/node_modules/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/jquery-ui.min.js"
+                asp-fallback-src="~/node_modules/jquery-ui-bundle.1.12.1/jquery-ui.min.js"
+                asp-fallback-test="window.jQuery.ui">
+        </script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                asp-fallback-src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-ui-Slider-Pips/1.11.4/jquery-ui-slider-pips.min.js"
+                asp-fallback-src="ClientSide/Scripts/jquery-ui-slider-pips.min.js">
+        </script>
+
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"
+                asp-fallback-src="~/node_modules/node_modules/datatables.net/js/jquery.dataTables.js"
+                asp-fallback-test="jQuery.fn.dataTable">
+        </script>
+
+        <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"
+                asp-fallback-src="ClientSide/Scripts/dataTables.bootstrap.min.js">
+        </script>
+
+
+    </environment>
+
+    <script type="text/javascript" src="ClientSide/Scripts/searchCoursesHandler.js"></script>
+    <script type="text/javascript" src="ClientSide/Scripts/constraintsHandler.js"></script>
+
+    <script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i, j;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+
+        }
+        if (slideIndex === 3) {
+            var IsClashes = false;
+            if ($('#flatCheckBox').is(":checked")) {
+                // it is checked
+                IsClashes = true;
+
+            }
+
+            var freeD = $('#freeDays').slider("option", "value");
+            var maxG = $('#maxGap').slider("option", "value");
+
+
+            //var idList = JSON.stringify(selectedCoursesList);
+            $.post("Home/PostReDirectGetExample",
+                {
+                    ids: selectedCoursesList,
+                    clashes: IsClashes,
+                    freeDays: freeD,
+                    maxGap: maxG
+                },
+                function (data, status) {
+                    $data = $.parseJSON(data);
+
+                    $.each($data,
+                        function (i, item) {
+                            $c = "";
+                            $c +=
+                                "<tr><td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
+                                item.startHour +
+                                "</td>";
+                            $c +=
+                                "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
+                                item.sunday +
+                                "</td>";
+                            $c +=
+                                "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
+                                item.monday +
+                                "</td>";
+                            $c +=
+                                "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
+                                item.tuesday +
+                                "</td>";
+                            $c +=
+                                "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
+                                item.wednesday +
+                                "</td>";
+                            $c +=
+                                "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
+                                item.thursday +
+                                "</td>";
+                            $c +=
+                                "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
+                                item.friday +
+                                "</td></tr>";
+
+                            $('#timetablesTbl').find('tbody').append($c);
+
+                        });
+
+                });
+
+            /* OPTIONAL FOR PAGINATION EITHER THAT OR BOOTSTAP PAGER */
+            /*
+            $('#timetablesTbl').dataTable( {
+                "pageLength": 16,
+                "scrollX": true,
+                "pagingType": "simple_numbers"
+            } );
+
+            */
+
+        }
+
+
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+    }
+    </script>
+</body>
+</html>
