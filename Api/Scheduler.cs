@@ -83,7 +83,7 @@ namespace Api
 
         public void BacktrackingAllSolutions(List<ClassType> variables, Timetable instantiation, List<Timetable> allSolutions, int index, ConstraintsCollection constraints)
         {
-            if (variables.Count - 1 == index)
+            if (variables.Count == index)
             {
                 allSolutions.Add(instantiation);
                 return;

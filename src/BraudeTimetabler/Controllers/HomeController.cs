@@ -32,11 +32,6 @@ namespace BraudeTimetabler.Controllers
             this.coursesDataService = coursesDataService;
         }
 
-        //public IActionResult Try()
-        //{
-        //    return new JavaScriptSerializer().Serialize(coursesDataService.GetAllModels());
-        //}
-
         [HttpGet] // when user wants to get a page
                   // FurtherMore: 
                   // Get is for user read operations. 
@@ -45,12 +40,6 @@ namespace BraudeTimetabler.Controllers
         {
             var model = HomePageViewModel;
 
-            if (!model.SelectedCourses.Any())
-            {
-                model.SelectedCourses.Add(model.AllCourses[3]);
-                model.SelectedCourses.Add(model.AllCourses[22]);
-            }
-            
             return View(model);
         }
 
@@ -75,24 +64,36 @@ namespace BraudeTimetabler.Controllers
             {
                 var scheduler = new Scheduler();
                 var selectedCourses = new List<Course>();
-                
-                //foreach (var id in model.Ids)
-                //{
-                //    var course = coursesDataService.Get(id);
-                //    selectedCourses.Add(course);
-                //}
 
-                selectedCourses.Add(coursesDataService.Get("11001"));
-                selectedCourses.Add(coursesDataService.Get("11003"));
-                var constraints = new ConstraintsCollection();
-                var minFreeDaysConstraint = new MinimumFreeDaysConstraint(model.FreeDays);
-                var clashesConstraint = new ClashesConstraint(model.Clashes);
-                constraints.Add(minFreeDaysConstraint);
-                constraints.Add(clashesConstraint);
+                if (model.Ids == null)
+                {
+                    return Content(string.Empty); // TODO: check user picked courses in client
+                }
+
+                foreach (var id in model.Ids)
+                {
+                    var course = coursesDataService.Get(id);
+                    selectedCourses.Add(course);
+                }
+
+                // selectedCourses.Add(coursesDataService.Get("11001"));
+                // selectedCourses.Add(coursesDataService.Get("11003"));
+                var constraints = new ConstraintsCollection
+                {
+                    new MinimumFreeDaysConstraint(model.FreeDays),
+                    new ClashesConstraint(model.Clashes),
+                    new MaxGapBetweenClassesConstraint(model.MaxGap)
+                };
 
                 var solution = scheduler.SolveSssp(selectedCourses, constraints);
 
-                var response = solution.Select(s => s.ExportToJason()).FirstOrDefault();
+                var i = 0; 
+                // we are currently limit the results to 200 because the client crash when we sent a lot.
+                var response = solution
+                    .TakeWhile(x => i++ < 200)
+                    .Select(s => s.ExportToJason())
+                    .ToArray();
+
                 return Json(response);
                 // do things with data...
 

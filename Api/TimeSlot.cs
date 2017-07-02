@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 
 namespace Api
@@ -23,7 +25,7 @@ namespace Api
                 sb.AppendLine(groupEvent.ToString());
             }
 
-            return sb.ToString();
+            return WebUtility.HtmlEncode(sb.ToString()).Replace(Environment.NewLine, "<br />");
         }
     }
 }

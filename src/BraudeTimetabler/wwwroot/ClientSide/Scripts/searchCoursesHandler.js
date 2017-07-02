@@ -8,7 +8,7 @@ var tableRow;
 var selectedCoursesList = [];
 var removeCrs;
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     // $.getJSON("http://localhost/databaseMock.php",
     //    function (data) {
@@ -43,24 +43,24 @@ $(document).ready(function() {
 
         //Recusively filter the jquery object to get results.
         jo.filter(function (i, v) {
-            var $t = $(this);
-            for (var d = 0; d < data.length; ++d) {
-                if ($t.is(":contains('" + data[d] + "')")) {
-                    return true;
+                var $t = $(this);
+                for (var d = 0; d < data.length; ++d) {
+                    if ($t.is(":contains('" + data[d] + "')")) {
+                        return true;
+                    }
                 }
-            }
-            return false;
-        })
-        //show the rows that match.
+                return false;
+            })
+            //show the rows that match.
             .show();
     });
 
 
     /*-----------------add courses to list---------------------*/
 
-    $('#coursesDataBaseTbl').on('click', 'td',function() {
+    $('#coursesDataBaseTbl').on('click', 'td', function () {
 
-        tableRow =  $(this).closest('tr');
+        tableRow = $(this).closest('tr');
 
         $('#coursesDataBaseTbl').find('tr.highlighted').removeClass("highlighted");
         $('#coursesDataBaseTbl').find('td.highlighted').removeClass("highlighted");
@@ -72,26 +72,28 @@ $(document).ready(function() {
     });
 
 
-    $('#selectCourseBtn').on('click',function() {
+    $('#selectCourseBtn').on('click', function () {
 
         $('#coursesDataBaseTbl').find('tr.highlighted').removeClass("highlighted");
         $('#coursesDataBaseTbl').find('td.highlighted').removeClass("highlighted");
 
-        $('#slctdTbl').find('tbody').append('<tr>'+selectedCourse+'</tr>');
+        $('#slctdTbl').find('tbody').append('<tr class="tbl-row rtl">' + selectedCourse + '</tr>');
 
 
-        document.getElementById("selectCourseBtn").style.display =   document.getElementById("selectCourseBtn").style.display === "block" ? "none" : "block";
+        document.getElementById("selectCourseBtn").style.display = document.getElementById("selectCourseBtn").style.display === "block" ? "none" : "block";
 
 
 
-        var newCourseId = tableRow.cells.namedItem("tableCourseId").innerHTML;
+
+        var newCourseId = tableRow[0].cells.tableCourseId.innerText;
+
         selectedCoursesList.push(newCourseId);
 
         //remove from table
         tableRow.remove();
 
         //add id to list
-       // var newCourseId = $(selectedCourse).find("td").html();
+        // var newCourseId = $(selectedCourse).find("td").html();
 
 
 
@@ -102,7 +104,7 @@ $(document).ready(function() {
 
     /*-----------------remove courses from list---------------------*/
 
-    $('#slctdTbl').on('click', 'td',function() {
+    $('#slctdTbl').on('click', 'td', function () {
 
         tableRow = $(this).closest('tr');
 
@@ -120,7 +122,7 @@ $(document).ready(function() {
     });
 
 
-    $('#removeCourseBtn').on('click',function() {
+    $('#removeCourseBtn').on('click', function () {
 
         //remove highlight
         $('#slctdTbl').find('tr.highlighted').removeClass("highlighted");
@@ -128,10 +130,10 @@ $(document).ready(function() {
 
 
         //add back to database
-        $('#coursesDataBaseTbl').find('tbody').append('<tr>'+removeCrs+'</tr>');
+        $('#coursesDataBaseTbl').find('tbody').append('<tr>' + removeCrs + '</tr>');
 
         //hide button
-        document.getElementById("removeCourseBtn").style.display =   document.getElementById("removeCourseBtn").style.display === "block" ? "none" : "block";
+        document.getElementById("removeCourseBtn").style.display = document.getElementById("removeCourseBtn").style.display === "block" ? "none" : "block";
 
 
 

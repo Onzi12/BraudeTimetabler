@@ -47,7 +47,7 @@ namespace Api
             {
                 var j = 0;
                 var row = new ClientTimetableRow();
-                row.startHour = Time.IndexHourToString(i + 1);
+                row.startHour = Time.IndexHourToString(i);
                 row.sunday = GetSlotToString(i, j++);;
                 row.monday = GetSlotToString(i, j++);
                 row.tuesday = GetSlotToString(i, j++);

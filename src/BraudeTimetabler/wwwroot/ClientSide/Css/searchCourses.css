@@ -47,11 +47,9 @@ td,th,tr{
 
 
 .Left-bottom-container{
-    margin-left: 1.3em;
     border-radius: 15px;
     height:100%;
     background-color:rgb(220,228,206);
-
 }
 
 .highlighted {   background-color: rgb(72,189,161); } /*highlight selected course*/
@@ -77,8 +75,12 @@ td,th,tr{
 
 .Right-bottom-container{
     border-radius: 15px;
-    height:75%;
     background-color:rgb(220,228,206);
+}
+
+
+.label-bigg {
+    font-size: 40px;   
 }
 
 
