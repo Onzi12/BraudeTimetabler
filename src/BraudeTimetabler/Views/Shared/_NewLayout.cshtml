@@ -328,11 +328,9 @@
             calculatingLabelInterval = setInterval(function () {
                 var prev = calculatingObj.text();
                 var textToAdd = ".";
-                if ((i++ % 5) === 0 ) {
-                    textToAdd += "<br />";
-                }
+
                 calculatingObj.html(prev + textToAdd);
-            }, 175);
+            }, 250);
             calculatingObj.show();
 
             //var idList = JSON.stringify(selectedCoursesList);
