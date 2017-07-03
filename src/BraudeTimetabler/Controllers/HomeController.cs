@@ -87,10 +87,8 @@ namespace BraudeTimetabler.Controllers
 
                 var solution = scheduler.SolveSssp(selectedCourses, constraints);
 
-                var i = 0; 
                 // we are currently limit the results to 200 because the client crash when we sent a lot.
                 var response = solution
-                    .TakeWhile(x => i++ < 200)
                     .Select(s => s.ExportToJason())
                     .ToArray();
 

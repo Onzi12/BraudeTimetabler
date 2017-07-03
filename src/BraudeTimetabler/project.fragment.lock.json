@@ -8,6 +8,7 @@
         "bin/Debug/Api.dll": {}
       },
       "runtime": {
+        "../packages/C5.2.4.5947.17249/lib/net45/C5.dll": {},
         "../packages/ExcelDataReader.2.1.2.3/lib/net45/Excel.dll": {},
         "../packages/SharpZipLib.0.86.0/lib/20/ICSharpCode.SharpZipLib.dll": {},
         "bin/Debug/Api.dll": {}

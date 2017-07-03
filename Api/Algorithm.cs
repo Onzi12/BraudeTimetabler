@@ -27,7 +27,7 @@ namespace Api
             var scheduler = new Scheduler();
             var allSolutions = scheduler.SolveSssp(courses, constraints);
 
-            Console.WriteLine(allSolutions.Count);
+            Console.WriteLine(allSolutions.Count());
             foreach (var solution in allSolutions)
             {
                 solution.ExportToJason();

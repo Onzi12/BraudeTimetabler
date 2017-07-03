@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using C5;
 
 namespace Api
 {
     public class Scheduler
     {
         //public List<Timetable> SolveCourseRegistraionCSP(ConstraintsSatisfactionProblemSo csp) 
-        public List<Timetable> GetAllSolutions(ConstraintsCollection constraints, IList<Course> courses)
+        public List<Timetable> GetAllSolutions(ConstraintsCollection constraints, System.Collections.Generic.IList<Course> courses)
         {
             //var allCoursesClassTypes = new List<ClassType>();
 
@@ -62,36 +64,49 @@ namespace Api
             return null;
         }
 
-        public List<Timetable> SolveSssp(IList<Course> courses, ConstraintsCollection constraints)
+        public IEnumerable<Timetable> SolveSssp(System.Collections.Generic.IList<Course> courses, ConstraintsCollection constraints)
         {
             var allClassTypes = GetAllClassTypes(courses);
             var variables = ApplyMrvHeuristic(allClassTypes);
 
-            //allSolutions = {}
-            var allSolutions = new List<Timetable>();
+            //allSolutions = MaxHeap
+            var allSolutions = new IntervalHeap<Timetable>(200);
+            
+            //TODO: Genetic algorithm
 
             //BT(Variables, {}, Domains, allSolutions)
             BacktrackingAllSolutions(variables, new Timetable(), allSolutions, 0,  constraints);
 
             //ToDo: Rate(allSolutions)
 
-            SortByRate(allSolutions);
+            var sortedSolutions = SortByRate(allSolutions);
 
             //Return allSolutions
-            return allSolutions;
+            return sortedSolutions;
         }
 
-        private void SortByRate(List<Timetable> allSolutions)
+        private IEnumerable<Timetable> SortByRate(IntervalHeap<Timetable> allSolutions)
         {
-            allSolutions.Sort( (x, y) => (int)(x.Rating - y.Rating));
+            return allSolutions.OrderBy(x => x.Rating);
         }
 
-        public void BacktrackingAllSolutions(List<ClassType> variables, Timetable instantiation, List<Timetable> allSolutions, int index, ConstraintsCollection constraints)
+        public void BacktrackingAllSolutions(List<ClassType> variables, Timetable instantiation, IPriorityQueue<Timetable> allSolutions, int index, ConstraintsCollection constraints)
         {
             if (variables.Count == index)
             {
-                instantiation.Rate(constraints);
-                allSolutions.Add(instantiation);
+                var rate = instantiation.Rate(constraints);
+                if (allSolutions.Count < 200)
+                {
+                    allSolutions.Add(instantiation);
+                    return;
+                }
+
+                if (rate < allSolutions.FindMax().Rating)
+                {
+                    allSolutions.DeleteMax();
+                    allSolutions.Add(instantiation);
+                }
+
                 return;
             }
 
@@ -108,7 +123,7 @@ namespace Api
             }
         }
 
-        private IEnumerable<ClassType> GetAllClassTypes(IList<Course> courses)
+        private IEnumerable<ClassType> GetAllClassTypes(System.Collections.Generic.IList<Course> courses)
         {
             return courses.SelectMany(course => course.ClassTypes); 
         }

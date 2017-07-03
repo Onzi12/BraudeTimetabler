@@ -6,7 +6,7 @@ using System.Web.Script.Serialization;
 
 namespace Api
 {
-    public class Timetable : IEnumerable<Group>
+    public class Timetable : IEnumerable<Group>, IComparer<Timetable>, IEqualityComparer<Timetable>, IComparable<Timetable>
     {
         public TimeSlot[,] TimeSlotsTimetable
         {
@@ -40,7 +40,7 @@ namespace Api
 
         public double Rating { get; private set; }
 
-        public  void Rate(ConstraintsCollection constraints)
+        public  double Rate(ConstraintsCollection constraints)
         {
             double timetableRate = 0;
             foreach (var constraint in constraints)
@@ -48,7 +48,7 @@ namespace Api
                 timetableRate += constraint.RatePenalty * constraint.GetRateFactor(this);
             }
 
-            Rating = timetableRate;
+            return Rating = timetableRate; // update Rating and return it
         }
 
         private readonly List<Group> courseGroups;
@@ -112,6 +112,14 @@ namespace Api
         public Timetable Copy()
         {
             return new Timetable(this.CoursesGroups);
+        }
+
+        public int Compare(Timetable x, Timetable y) => x?.Rating.CompareTo(y?.Rating) ?? -1;
+        public bool Equals(Timetable x, Timetable y) => x?.Rating.Equals(y?.Rating) ?? false;
+        public int GetHashCode(Timetable obj) => obj.Rating.GetHashCode();
+        public int CompareTo(Timetable other)
+        {
+            return Compare(this, other);
         }
     }
 
