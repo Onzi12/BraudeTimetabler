@@ -17,5 +17,9 @@
         }
 
         public abstract bool IsConstraintSatisfied(Timetable timetable);
+
+        public abstract double GetRateFactor(Timetable timetable);
+
+        public abstract double RatePenalty { get; }
     }
 }

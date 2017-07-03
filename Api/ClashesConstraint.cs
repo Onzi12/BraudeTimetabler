@@ -1,3 +1,5 @@
+using System;
+
 namespace Api
 {
     public class ClashesConstraint : ConstraintBase
@@ -23,6 +25,22 @@ namespace Api
 
             return !IsClashesExist(timetable);
         }
+
+        public override double GetRateFactor(Timetable timetable)
+        {
+            double factor = 0;
+            foreach (var timeSlot in timetable.TimeSlotsTimetable)
+            {
+                if (timeSlot?.Events.Count > 1)
+                {
+                    factor += Math.Pow(timeSlot.Events.Count - 1, 2); // penalty for each Clash. if clash is bigger then two (3 events for example), the penalty will be in the higher by a exponent factor
+                }
+            }
+
+            return factor;
+        }
+
+        public override double RatePenalty => 8;
 
         private static bool IsClashesExist(Timetable timetable)
         {

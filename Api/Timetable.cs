@@ -38,6 +38,19 @@ namespace Api
 
         public IReadOnlyList<Group> CoursesGroups { get; }
 
+        public double Rating { get; private set; }
+
+        public  void Rate(ConstraintsCollection constraints)
+        {
+            double timetableRate = 0;
+            foreach (var constraint in constraints)
+            {
+                timetableRate += constraint.RatePenalty * constraint.GetRateFactor(this);
+            }
+
+            Rating = timetableRate;
+        }
+
         private readonly List<Group> courseGroups;
 
         public string ExportToJason()

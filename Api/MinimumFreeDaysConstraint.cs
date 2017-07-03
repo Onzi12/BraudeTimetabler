@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Api
 {
@@ -20,6 +21,26 @@ namespace Api
         {
             return NumberOfSchoolDays(timetable) <= Time.TotalSchoolDaysInWeek - MinFreeDays;
         }
+
+        public override double GetRateFactor(Timetable timetable)
+        {
+            var factor = 0;
+            for (int i = 0; i < Time.TotalSchoolDaysInWeek; i++)
+            {
+                for (int j = 0; j < Time.TotalHoursOfDay; j++)
+                {
+                    if (timetable.TimeSlotsTimetable[j, i]?.Events.Count > 0)
+                    {
+                       ++factor;
+                       break;
+                    }
+                }
+            }
+
+            return factor;
+        }
+
+        public override double RatePenalty => 20;
 
         private int NumberOfSchoolDays(Timetable timetable)
         {

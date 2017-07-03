@@ -75,16 +75,22 @@ namespace Api
 
             //ToDo: Rate(allSolutions)
 
-            //ToDo: Sort_By_Rate(allSolutions)
+            SortByRate(allSolutions);
 
             //Return allSolutions
             return allSolutions;
+        }
+
+        private void SortByRate(List<Timetable> allSolutions)
+        {
+            allSolutions.Sort( (x, y) => (int)(x.Rating - y.Rating));
         }
 
         public void BacktrackingAllSolutions(List<ClassType> variables, Timetable instantiation, List<Timetable> allSolutions, int index, ConstraintsCollection constraints)
         {
             if (variables.Count == index)
             {
+                instantiation.Rate(constraints);
                 allSolutions.Add(instantiation);
                 return;
             }
