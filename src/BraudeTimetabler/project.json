@@ -11,7 +11,8 @@
     "Microsoft.AspNetCore.Razor.Tools": {
       "version": "1.1.0-preview4-final",
       "type": "build"
-    }
+    },
+    "GeneticSharp": "1.1.19"
   },
 
   "tools": {

@@ -48,7 +48,7 @@
 
 <html style="background-color:#383747">
 <head>
-    <title>On And Mey</title>
+    <title>@ViewBag.Title</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="~/ClientSide/Css/jquery-ui-slider-pips.css">
@@ -162,9 +162,9 @@
     <script type="text/javascript" src="ClientSide/Scripts/constraintsHandler.js"></script>
 
 <script>
-
+    
     /*****************pagination***************************/
-    $.fn.pageMe = function (opts) {
+    $.fn.pageMe = function (opts, timetables, ratingLbl) {
         var $this = this,
             defaults = {
                 perPage: 14,
@@ -197,7 +197,8 @@
 
         var curr = 0;
         while (numPages > curr && (settings.hidePageNumbers == false)) {
-            $('<li><a href="#" class="page_link">' + (curr + 1) + '</a></li>').appendTo(pager);
+            $('<li><a ' + (timetables[curr].IsGeneticSolution ? 'style="background-color: red' : '') +
+                '" href="#" class="page_link">' + (curr + 1) + '</a></li>').appendTo(pager);
             curr++;
         }
 
@@ -241,6 +242,7 @@
         }
 
         function goTo(page) {
+            ratingLbl.text("Rating: " + timetables[page].Rating);
             var startAt = page * perPage,
                 endOn = startAt + perPage;
 
@@ -268,6 +270,8 @@
             pager.children().eq(page + 1).addClass("active");
 
         }
+
+        ratingLbl.text("Rating: " + timetables[0].Rating);
     };
 
 
@@ -291,10 +295,10 @@
         var slides = document.getElementsByClassName("mySlides");
         var dots = document.getElementsByClassName("dot");
         if (n > slides.length) {
-            slideIndex = 1
+            slideIndex = 1;
         }
         if (n < 1) {
-            slideIndex = slides.length
+            slideIndex = slides.length;
         }
         for (i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
@@ -305,6 +309,8 @@
         }
         if (slideIndex === 3) {
             $("#noResultsLbl").hide();
+            var ratingLbl = $("#ratingLbl");
+            ratingLbl.text("");
             var IsClashes = false;
             if ($('#flatCheckBox').is(":checked")) {
                 // it is checked
@@ -352,12 +358,17 @@
                         return;
                     }
 
-                    $.each(data, function (j, timetableJSON)
+                    var timetables = [];
+                    for (var i = 0; i < data.length; ++i) {
+                        timetables[i] = JSON.parse(data[i]);
+                    }
+
+                    $.each(timetables, function (j, timetable)
                     {
-                        $timetable = $.parseJSON(timetableJSON);
+                        var timeslots = timetable.timeslotsMatrix;
 
 
-                        $.each($timetable,
+                        $.each(timeslots,
                             function (i, item)
                             {
                                 $c = "";
@@ -392,10 +403,11 @@
 
                                 $('#timetablesTbl').find('tbody').append($c);
 
-                            });//end of inner $each 
+                            });//end of inner $each
+
 
                     });// end of outer $each 
-                    $('#timetablesTbl').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 14 });
+                    $('#timetablesTbl').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 14 }, timetables, ratingLbl);
               
                 }); //end of post
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Api;
 using BraudeTimetabler.Models;
 using BraudeTimetabler.Services;
@@ -85,10 +86,10 @@ namespace BraudeTimetabler.Controllers
                     new MaxGapBetweenClassesConstraint(model.MaxGap)
                 };
 
-                var solution = scheduler.SolveSssp(selectedCourses, constraints);
+                var solutions = scheduler.SolveSssp(selectedCourses, constraints);
 
                 // we are currently limit the results to 200 because the client crash when we sent a lot.
-                var response = solution
+                var response = solutions
                     .Select(s => s.ExportToJason())
                     .ToArray();
 

@@ -1,68 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
+using System.Threading.Tasks;
 using C5;
+using GeneticSharp.Extensions.Mathematic;
 
 namespace Api
 {
     public class Scheduler
     {
-        //public List<Timetable> SolveCourseRegistraionCSP(ConstraintsSatisfactionProblemSo csp) 
-        public List<Timetable> GetAllSolutions(ConstraintsCollection constraints, System.Collections.Generic.IList<Course> courses)
-        {
-            //var allCoursesClassTypes = new List<ClassType>();
-
-            //foreach (var course in courses)
-            //{
-            //    foreach (var courseClassType in course.ClassTypes)
-            //    {
-            //        allCoursesClassTypes.Add(courseClassType);
-            //    }
-            //}
-
-
-            //var orderedVariables = ApplyMrvHeuristic(allCoursesClassTypes);
-
-            ////RecursiveBt(orderedVariables, solutions, domains);
-            //var timetableTree = new TimetableTree(orderedVariables.Count);
-            //var level = 0;
-            //foreach (var variable in orderedVariables)
-            //{
-            //    var partialAssignments = timetableTree.GetNodesAtLevel(level);
-            //    if (level == 10)
-            //    {
-
-            //    }
-            //    if (level == 18)
-            //    {
-
-            //    }
-            //    if (partialAssignments.Any() == false)
-            //    {
-            //        break;
-            //    }
-
-
-            //    foreach (var partialAssignment in partialAssignments)
-            //    {
-            //        var timetable = partialAssignment.CreateTimetableFromNode();
-            //        foreach (var courseTypeGroup in variable.Groups)
-            //        {
-            //            if (constraints.IsConsistent(timetable, courseTypeGroup))
-            //            {
-            //                //timetableTree.AddChildrenToLevelNodes(level, typeGroup);
-            //                timetableTree.AddToChildren(partialAssignment, courseTypeGroup);
-            //                // leaf.AddToChildren(Group);
-            //            }
-            //        }
-
-            //    }
-            //    level++;
-            //}
-
-            //return timetableTree.LeafsToTimetables();
-            return null;
-        }
 
         public IEnumerable<Timetable> SolveSssp(System.Collections.Generic.IList<Course> courses, ConstraintsCollection constraints)
         {
@@ -70,30 +20,64 @@ namespace Api
             var variables = ApplyMrvHeuristic(allClassTypes);
 
             //allSolutions = MaxHeap
-            var allSolutions = new IntervalHeap<Timetable>(200);
-            
+            var backtrackingSolutions = new IntervalHeap<Timetable>(200);
+
             //TODO: Genetic algorithm
 
-            //BT(Variables, {}, Domains, allSolutions)
-            BacktrackingAllSolutions(variables, new Timetable(), allSolutions, 0,  constraints);
+            // BT(Variables, {}, Domains, allSolutions)
+            var cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(20));
+            var cancellationToken = cancellationTokenSource.Token;
+            var backtrackingTask = Task.Factory.StartNew(
+                () =>
+                {
+                    BacktrackingAllSolutions(variables, new Timetable(), backtrackingSolutions, 0, constraints, cancellationToken);
+                    return backtrackingSolutions;
+                }, cancellationToken);
 
-            //ToDo: Rate(allSolutions)
+            // Generic algorithm
+            var geneticAlgorithmRunner = new TimetablerGeneticAlgorithmRunner(variables, constraints);
+            var geneticTask = geneticAlgorithmRunner.RunAsync();
 
-            var sortedSolutions = SortByRate(allSolutions);
+            Task.WaitAll(backtrackingTask);
+
+            var timetables = new List<Timetable>();
+            if (cancellationToken.IsCancellationRequested)
+            {
+                geneticTask.Wait();
+                timetables.Add(geneticAlgorithmRunner.GeneticSolution);
+            }
+
+            if (backtrackingSolutions.Any())
+            {
+                timetables.AddRange(backtrackingSolutions);
+                // remove after project presentation
+                if (!cancellationToken.IsCancellationRequested && geneticAlgorithmRunner.GeneticSolution != null)
+                    timetables.Add(geneticAlgorithmRunner.GeneticSolution);
+                // end of the part to remove
+            }
+
+            var sortedSolutions = SortByRate(timetables);
 
             //Return allSolutions
             return sortedSolutions;
         }
 
-        private IEnumerable<Timetable> SortByRate(IntervalHeap<Timetable> allSolutions)
+        private IEnumerable<Timetable> SortByRate(IEnumerable<Timetable> allSolutions)
         {
             return allSolutions.OrderBy(x => x.Rating);
         }
 
-        public void BacktrackingAllSolutions(List<ClassType> variables, Timetable instantiation, IPriorityQueue<Timetable> allSolutions, int index, ConstraintsCollection constraints)
+        public void BacktrackingAllSolutions(List<ClassType> variables, Timetable instantiation, IPriorityQueue<Timetable> allSolutions, int index, ConstraintsCollection constraints, CancellationToken cancellationToken)
         {
             if (variables.Count == index)
             {
+                // check constraints who can be calculated only after timetable is fully instantiated
+                if (!constraints.IsConsistent(instantiation, true))
+                {
+                    return;
+                }
+
                 var rate = instantiation.Rate(constraints);
                 if (allSolutions.Count < 200)
                 {
@@ -115,10 +99,15 @@ namespace Api
 
             foreach (var value in domain)
             {
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
                 var tempTimetable = instantiation.Copy();
                 if (constraints.IsConsistent(tempTimetable, value))
                 {
-                    BacktrackingAllSolutions(variables, tempTimetable, allSolutions, index, constraints);
+                    BacktrackingAllSolutions(variables, tempTimetable, allSolutions, index, constraints, cancellationToken);
                 }
             }
         }

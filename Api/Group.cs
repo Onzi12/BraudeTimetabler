@@ -51,7 +51,7 @@ namespace Api
 
         public override string ToString()
         {
-            return this.Lecturer.Length < 10 ? Lecturer : Lecturer.Substring(0, 10)+"..." ;
+            return this.Lecturer.Length <= 20 ? Lecturer : Lecturer.Substring(0, 17)+"..." ;
         }
     }
 }

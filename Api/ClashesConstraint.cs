@@ -4,7 +4,7 @@ namespace Api
 {
     public class ClashesConstraint : ConstraintBase
     {
-        public ClashesConstraint(bool clashesAllowed, bool isEnabled = true) : base(isEnabled)
+        public ClashesConstraint(bool clashesAllowed) : base(false)
         {
             ClashesAllowed = clashesAllowed;
         }
@@ -40,7 +40,7 @@ namespace Api
             return factor;
         }
 
-        public override double RatePenalty => 8;
+        public override double RatePenalty => 11;
 
         private static bool IsClashesExist(Timetable timetable)
         {

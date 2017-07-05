@@ -10,7 +10,13 @@
       "runtime": {
         "../packages/C5.2.4.5947.17249/lib/net45/C5.dll": {},
         "../packages/ExcelDataReader.2.1.2.3/lib/net45/Excel.dll": {},
+        "../packages/GeneticSharp.1.1.19/lib/net35/GeneticSharp.Domain.dll": {},
+        "../packages/GeneticSharp.1.1.19/lib/net35/GeneticSharp.Extensions.dll": {},
+        "../packages/GeneticSharp.1.1.19/lib/net35/GeneticSharp.Infrastructure.Framework.dll": {},
+        "../packages/GeneticSharp.1.1.19/lib/net35/GeneticSharp.Infrastructure.Threading.dll": {},
+        "../packages/GeneticSharp.1.1.19/lib/net35/NCalc.dll": {},
         "../packages/SharpZipLib.0.86.0/lib/20/ICSharpCode.SharpZipLib.dll": {},
+        "../packages/SmartThreadPool.dll.2.2.4/lib/net45/SmartThreadPool.dll": {},
         "bin/Debug/Api.dll": {}
       },
       "contentFiles": {

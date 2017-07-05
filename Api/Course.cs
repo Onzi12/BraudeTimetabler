@@ -32,11 +32,11 @@ namespace Api
 
         public override string ToString()
         {
-            if (Name.Length < 10)
+            if (Name.Length <= 20)
             {
                 return this.Name;
             }
-            return Name.Substring(0, 10) + "...";
+            return Name.Substring(0, 17) + "...";
         }
     }
 }

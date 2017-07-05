@@ -3,18 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Script.Serialization;
+using GeneticSharp.Domain.Chromosomes;
+using GeneticSharp.Domain.Fitnesses;
 
 namespace Api
 {
-    public class Timetable : IEnumerable<Group>, IComparer<Timetable>, IEqualityComparer<Timetable>, IComparable<Timetable>
+    public class Timetable : IEnumerable<Group>, IComparer<Timetable>, IEqualityComparer<Timetable>, IComparable<Timetable>, IFitness
     {
+        public bool IsGeneticSolution { get; }
+
         public TimeSlot[,] TimeSlotsTimetable
         {
             get;
         }
 
-        public Timetable(IEnumerable<Group> groups = null)
+        public Timetable(IEnumerable<Group> groups = null, bool isGeneticSolution = false, double rating = double.MaxValue)
         {
+            IsGeneticSolution = isGeneticSolution;
             if (groups == null)
             {
                 groups = Enumerable.Empty<Group>();
@@ -29,6 +34,7 @@ namespace Api
             }
 
             CoursesGroups = courseGroups.AsReadOnly();
+            this.Rating = rating;
         }
 
         public Timetable(Timetable instantiation, Group value) : this(instantiation.CoursesGroups)
@@ -70,7 +76,7 @@ namespace Api
                 arr[i] = row;
             }
 
-            var jason = new JavaScriptSerializer().Serialize(arr);
+            var jason = new JavaScriptSerializer().Serialize(new { timeslotsMatrix = arr, IsGeneticSolution, Rating});
             Console.WriteLine(jason);
             
             return jason;
@@ -120,6 +126,11 @@ namespace Api
         public int CompareTo(Timetable other)
         {
             return Compare(this, other);
+        }
+
+        public double Evaluate(IChromosome chromosome)
+        {
+            throw new NotImplementedException();
         }
     }
 

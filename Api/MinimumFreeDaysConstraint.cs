@@ -5,7 +5,7 @@ namespace Api
 {
     public class MinimumFreeDaysConstraint : ConstraintBase
     {
-        public MinimumFreeDaysConstraint(int minFreeDays, bool isEnabled = true) : base(isEnabled)
+        public MinimumFreeDaysConstraint(int minFreeDays) : base(false)
         {
             this.MinFreeDays = minFreeDays;
         }

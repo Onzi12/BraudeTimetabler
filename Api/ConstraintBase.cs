@@ -2,18 +2,19 @@
 {
     public abstract class ConstraintBase
     {
-        protected ConstraintBase(bool isEnabled)
+        protected ConstraintBase(bool calculateOnlyAfterTimetableIsReady)
         {
-            IsEnabled = isEnabled;
+            CalculateOnlyAfterTimetableIsReady = calculateOnlyAfterTimetableIsReady;
+        }
+
+        public bool CalculateOnlyAfterTimetableIsReady
+        {
+            get;
         }
 
         public abstract string Name
         {
             get;
-        }
-        public bool IsEnabled
-        {
-            get; set;
         }
 
         public abstract bool IsConstraintSatisfied(Timetable timetable);
