@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Api;
 using BraudeTimetabler.Models;
 using BraudeTimetabler.Services;
@@ -33,10 +32,7 @@ namespace BraudeTimetabler.Controllers
             this.coursesDataService = coursesDataService;
         }
 
-        [HttpGet] // when user wants to get a page
-                  // FurtherMore: 
-                  // Get is for user read operations. 
-                  // Post is for user write operations. 
+        [HttpGet] 
         public IActionResult Index()
         {
             var model = HomePageViewModel;
@@ -59,7 +55,7 @@ namespace BraudeTimetabler.Controllers
 
         // Post - ReDirect - Get Pattern => To avoid forms re-submissions
         [HttpPost]
-        public IActionResult PostReDirectGetExample(AlgorithmInputsViewModel model)
+        public IActionResult GenerateTimetables(AlgorithmInputsViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -77,8 +73,6 @@ namespace BraudeTimetabler.Controllers
                     selectedCourses.Add(course);
                 }
 
-                // selectedCourses.Add(coursesDataService.Get("11001"));
-                // selectedCourses.Add(coursesDataService.Get("11003"));
                 var constraints = new ConstraintsCollection
                 {
                     new MinimumFreeDaysConstraint(model.FreeDays),
@@ -88,20 +82,18 @@ namespace BraudeTimetabler.Controllers
 
                 var solutions = scheduler.SolveSssp(selectedCourses, constraints);
 
-                // we are currently limit the results to 200 because the client crash when we sent a lot.
                 var response = solutions
                     .Select(s => s.ExportToJason())
                     .ToArray();
 
                 return Json(response);
-                // do things with data...
 
                 // ReDirect To a HttpGet Action After a successful post operation.
                 //return RedirectToAction(nameof(CourseDetails), new { courseId });
             }
             return null;
             // else, return the form with user previous entered values
-            //return View();
+            //return View(model);
         }
     }
 }
