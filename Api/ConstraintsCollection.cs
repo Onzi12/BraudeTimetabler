@@ -9,7 +9,7 @@ namespace Api
         {
             foreach (var constraintBase in Items)
             {
-                if (constraintBase.CalculateOnlyAfterTimetableIsReady == isFullInstantiation && constraintBase.IsConstraintSatisfied(timetable) == false)
+                if ((isFullInstantiation || !constraintBase.CalculateOnlyAfterTimetableIsReady)  && constraintBase.IsConstraintSatisfied(timetable) == false)
                 {
                     return false;
                 }
