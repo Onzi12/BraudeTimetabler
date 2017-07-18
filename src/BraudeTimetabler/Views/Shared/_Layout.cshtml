@@ -205,19 +205,19 @@
 
     <script>
         var slideIndex = 1;
-        showSlides(slideIndex);
+        setCurrentSlide(slideIndex);
 
         function plusSlides(n) {
 
-            showSlides(slideIndex += n);
+            setCurrentSlide(slideIndex += n);
         }
 
         function currentSlide(n) {
 
-            showSlides(slideIndex = n);
+            setCurrentSlide(slideIndex = n);
         }
 
-        function showSlides(n) {
+        function setCurrentSlide(n) {
             var i, j;
             var slides = document.getElementsByClassName("mySlides");
             var dots = document.getElementsByClassName("dot");

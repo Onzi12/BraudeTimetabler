@@ -26,6 +26,10 @@
         font-size: 50px;
     }
 
+    .slide-highlighted {
+        background-color: blue !important;
+    }
+
     .table-responsive {
         height: 180px;
     }
@@ -71,7 +75,7 @@
 
             <!-- Left Arrow Navigation -->
             <div class="col-sm-1 hidden-xs gly max-height">
-                <span id="prev" class="glyphicon  glyphicon-chevron-left  vertical-align" onclick="plusSlides(-1)"></span>
+                <span id="prev" class="glyphicon  glyphicon-chevron-left  vertical-align" onclick="prevSlide()"></span>
             </div>
 
             <!-- Middle Area -->
@@ -90,17 +94,17 @@
                 <!-- Main Area Footer -->
                 <div class="row" style="height: 10%;">
                     <!-- Buttom Navigation Buttons -->
-                    <div class="btn-group-lg btn-group-justified max-height">
-                        <a class="btn btn-primary" onclick="currentSlide(1)">Select Courses</a>
-                        <a class="btn btn-primary" onclick="currentSlide(2)">Choose Constraints</a>
-                        <a class="btn btn-primary" onclick="currentSlide(3)">Generate Timetables</a>
+                    <div id="slidesButtons" class="btn-group-lg btn-group-justified max-height">
+                        <a class="btn btn-primary" onclick="setCurrentSlide(0)">Select Courses</a>
+                        <a class="btn btn-primary" onclick="setCurrentSlide(1)">Choose Constraints</a>
+                        <a class="btn btn-primary" onclick="setCurrentSlide(2)">Generate Timetables</a>
                     </div>
                 </div>
             </div>
 
             <!-- Right Arrow Navigation -->
             <div class="col-sm-1 hidden-xs gly max-height">
-                <span id="next" class="glyphicon  glyphicon-chevron-right  vertical-align" onclick="plusSlides(1)"></span>
+                <span id="next" class="glyphicon  glyphicon-chevron-right  vertical-align" onclick="nextSlide()"></span>
             </div>
         </div>
     </div>
@@ -158,267 +162,18 @@
 
 
     </environment>
+
     <script type="text/javascript" src="ClientSide/Scripts/searchCoursesHandler.js"></script>
     <script type="text/javascript" src="ClientSide/Scripts/constraintsHandler.js"></script>
+    <script type="text/javascript" src="ClientSide/Scripts/timetables-pagination.js"></script>
+    <script type="text/javascript" src="ClientSide/Scripts/slides-handler.js"></script>
 
 <script>
     
-    /*****************pagination***************************/
-    $.fn.pageMe = function (opts, timetables, ratingLbl) {
-        var $this = this,
-            defaults = {
-                perPage: 14,
-                showPrevNext: false,
-                hidePageNumbers: false
-            },
-            settings = $.extend(defaults, opts);
-
-        var listElement = $this;
-        var perPage = settings.perPage;
-        var children = listElement["0"].children[1].children;
-        var pager = $('.pager');
-
-        if (typeof settings.childSelector != "undefined") {
-            children = listElement.find(settings.childSelector);
-        }
-
-        if (typeof settings.pagerSelector != "undefined") {
-            pager = $(settings.pagerSelector);
-        }
-
-        var numItems = children.length;
-        var numPages = Math.ceil(numItems / perPage);
-
-        pager.data("curr", 0);
-
-        if (settings.showPrevNext) {
-            $('<li><a href="#" class="prev_link">«</a></li>').appendTo(pager);
-        }
-
-        var curr = 0;
-        while (numPages > curr && (settings.hidePageNumbers == false)) {
-            $('<li><a ' + (timetables[curr].IsGeneticSolution ? 'style="background-color: red' : '') +
-                '" href="#" class="page_link">' + (curr + 1) + '</a></li>').appendTo(pager);
-            curr++;
-        }
-
-        if (settings.showPrevNext) {
-            $('<li><a href="#" class="next_link">»</a></li>').appendTo(pager);
-        }
-
-        pager.find('.page_link:first').addClass('active');
-        pager.find('.prev_link').hide();
-        if (numPages <= 1) {
-            pager.find('.next_link').hide();
-        }
-        pager.children().eq(1).addClass("active");
-
-        $(children).hide();
-        var tempp = $(children).slice(0, perPage); 
-        $(tempp).show();
-
-        pager.find('li .page_link').click(function () {
-            var clickedPage = $(this).html().valueOf() - 1;
-            goTo(clickedPage, perPage);
-            return false;
-        });
-        pager.find('li .prev_link').click(function () {
-            previous();
-            return false;
-        });
-        pager.find('li .next_link').click(function () {
-            next();
-            return false;
-        });
-
-        function previous() {
-            var goToPage = parseInt(pager.data("curr")) - 1;
-            goTo(goToPage);
-        }
-
-        function next() {
-            goToPage = parseInt(pager.data("curr")) + 1;
-            goTo(goToPage);
-        }
-
-        function goTo(page) {
-            ratingLbl.text("Rating: " + timetables[page].Rating);
-            var startAt = page * perPage,
-                endOn = startAt + perPage;
-
-            $(children).hide();
-            var mtemp = $(children).slice(startAt, endOn);
-            $(mtemp).show();
-               
-                
-            if (page >= 1) {
-                pager.find('.prev_link').show();
-            }
-            else {
-                pager.find('.prev_link').hide();
-            }
-
-            if (page < (numPages - 1)) {
-                pager.find('.next_link').show();
-            }
-            else {
-                pager.find('.next_link').hide();
-            }
-
-            pager.data("curr", page);
-            pager.children().removeClass("active");
-            pager.children().eq(page + 1).addClass("active");
-
-        }
-
-        ratingLbl.text("Rating: " + timetables[0].Rating);
-    };
 
 
-    /******************slides handler************************/
-    var slideIndex = 1;
-    var calculatingLabelInterval = null;
-    showSlides(slideIndex);
 
-    function plusSlides(n) {
-
-        showSlides(slideIndex += n);
-    }
-
-    function currentSlide(n) {
-
-        showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-        var i, j;
-        var slides = document.getElementsByClassName("mySlides");
-        var dots = document.getElementsByClassName("dot");
-        if (n > slides.length) {
-            slideIndex = 1;
-        }
-        if (n < 1) {
-            slideIndex = slides.length;
-        }
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        for (i = 0; i < dots.length; i++) {
-            //   dots[i].className = dots[i].className.replace("active", "");
-
-        }
-        if (slideIndex === 3) {
-            $("#noResultsLbl").hide();
-            var ratingLbl = $("#ratingLbl");
-            ratingLbl.text("");
-            var IsClashes = false;
-            if ($('#flatCheckBox').is(":checked")) {
-                // it is checked
-                IsClashes = true;
-
-            }
-
-            var freeD = $('#freeDays').slider("option", "value");
-            var maxG = $('#maxGap').slider("option", "value");
-
-
-            $("#timetablesTbl > tbody").empty();
-            $('#myPager').empty();
-            var calculatingObj = $('#calculatingLbl');
-            calculatingObj.text("Calculating");
-            if (calculatingLabelInterval) {
-                clearInterval(calculatingLabelInterval);
-            }
-
-            var i = 1;
-            calculatingLabelInterval = setInterval(function () {
-                var prev = calculatingObj.text();
-                var textToAdd = ".";
-
-                calculatingObj.html(prev + textToAdd);
-            }, 250);
-            calculatingObj.show();
-
-            //var idList = JSON.stringify(selectedCoursesList);
-            $.post("Home/GenerateTimetables",
-                {
-                    ids: selectedCoursesList,
-                    clashes: IsClashes,
-                    freeDays: freeD,
-                    maxGap: maxG
-                },
-                function (data, status) {
-
-                    clearInterval(calculatingLabelInterval);
-                    calculatingLabelInterval = null;
-                    calculatingObj.hide();
-
-                    if (!data || data.length === 0) {
-                        $("#noResultsLbl").show();
-                        return;
-                    }
-
-                    var timetables = [];
-                    for (var i = 0; i < data.length; ++i) {
-                        timetables[i] = JSON.parse(data[i]);
-                    }
-
-                    $.each(timetables, function (j, timetable)
-                    {
-                        var timeslots = timetable.timeslotsMatrix;
-
-
-                        $.each(timeslots,
-                            function (i, item)
-                            {
-                                $c = "";
-                                $c +=
-                                    "<tr><td style='direction: rtl;'>" +
-                                    item.startHour +
-                                    "</td>";
-                                $c +=
-                                    "<td style=' direction: rtl;'>" +
-                                    item.sunday +
-                                    "</td>";
-                                $c +=
-                                    "<td style='direction: rtl; '>" +
-                                    item.monday +
-                                    "</td>";
-                                $c +=
-                                    "<td style=' direction: rtl; '>" +
-                                    item.tuesday +
-                                    "</td>";
-                                $c +=
-                                    "<td style=' direction: rtl;'>" +
-                                    item.wednesday +
-                                    "</td>";
-                                $c +=
-                                    "<td style='direction: rtl;'>" +
-                                    item.thursday +
-                                    "</td>";
-                                $c +=
-                                    "<td style='direction: rtl;'>" +
-                                    item.friday +
-                                    "</td></tr>";
-
-                                $('#timetablesTbl').find('tbody').append($c);
-
-                            });//end of inner $each
-
-
-                    });// end of outer $each 
-                    $('#timetablesTbl').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 14 }, timetables, ratingLbl);
-              
-                }); //end of post
-
-  
     
-        }
-
-
-        slides[slideIndex - 1].style.display = "block";
-        //   dots[slideIndex - 1].className += " active";
-    }
 </script>
 </body>
 </html>
