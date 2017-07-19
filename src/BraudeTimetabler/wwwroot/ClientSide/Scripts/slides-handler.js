@@ -102,37 +102,17 @@ function clientGenerateTimetablesResponseHandler(data, status) {
 
             $.each(timeslots,
                 function(i, item) {
-                    $c = "";
-                    $c +=
-                        "<tr><td style='direction: rtl;'>" +
-                        item.startHour +
-                        "</td>";
-                    $c +=
-                        "<td style=' direction: rtl;'>" +
-                        item.sunday +
-                        "</td>";
-                    $c +=
-                        "<td style='direction: rtl; '>" +
-                        item.monday +
-                        "</td>";
-                    $c +=
-                        "<td style=' direction: rtl; '>" +
-                        item.tuesday +
-                        "</td>";
-                    $c +=
-                        "<td style=' direction: rtl;'>" +
-                        item.wednesday +
-                        "</td>";
-                    $c +=
-                        "<td style='direction: rtl;'>" +
-                        item.thursday +
-                        "</td>";
-                    $c +=
-                        "<td style='direction: rtl;'>" +
-                        item.friday +
-                        "</td></tr>";
+                    var c = "<tr>";
+                    for (var k = 0; k < 7; k++) {
+                        c +=
+                            "<td style='direction: rtl;'>" +
+                            item[k] +
+                            "</td>";
+                    }
 
-                    $('#timetablesTbl').find('tbody').append($c);
+                    c += "</tr>";
+
+                    $('#timetablesTbl tbody').append(c);
 
                 }); //end of inner $each
 

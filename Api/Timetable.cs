@@ -61,19 +61,17 @@ namespace Api
 
         public string ExportToJason()
         {
-            var arr = new ClientTimetableRow[Time.TotalHoursOfDay - 1];
-            for (int i = 0; i < Time.TotalHoursOfDay - 1; i++) // 22:40 will always be empty
+            var arr = new List<string[]>(Time.TotalHoursOfDay - 1); // -1: 22:40 will always be empty
+            for (int i = 0; i < Time.TotalHoursOfDay - 1; i++) 
             {
-                var j = 0;
-                var row = new ClientTimetableRow();
-                row.startHour = Time.IndexHourToString(i);
-                row.sunday = GetSlotToString(i, j++);;
-                row.monday = GetSlotToString(i, j++);
-                row.tuesday = GetSlotToString(i, j++);
-                row.wednesday = GetSlotToString(i, j++);
-                row.thursday = GetSlotToString(i, j++);
-                row.friday = GetSlotToString(i, j++);
-                arr[i] = row;
+                var row = new string[Time.TotalHoursOfDay + 1];
+                row[0] = Time.IndexHourToString(i);
+
+                for (int j = 0; j < Time.TotalSchoolDaysInWeek; j++)
+                {
+                    row[j + 1] = GetSlotToString(i, j);
+                }
+                arr.Add(row);
             }
 
             var jason = new JavaScriptSerializer().Serialize(new { timeslotsMatrix = arr, IsGeneticSolution, Rating});
