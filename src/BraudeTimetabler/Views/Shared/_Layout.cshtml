@@ -1,149 +1,113 @@
-﻿
-<!DOCTYPE html>
-@*<style>
-    .rtl {
-        direction: rtl;
-        margin-right: 15px;
-        text-align: right;
+﻿<style>
+    html, body, .max-height {
+        height: 100%;
     }
 
-    .marginTop {
-        margin-top: 15px;
-    }
-
-    .marginRight {
-        margin-right: 15px;
-    }
-
-    .content-margin {
-        margin-top: 44px;
-        margin-left: 25px;
-    }
-
-
-
-    .black-background {
-        background-color: #383747;
-    }
-
-    #topYellowContainer {
-        position: absolute;
-        left: 0.8%;
-        top: 0.8%;
-        width: 98.5%;
-        height: 98.5%;
-        margin: auto;
-        border-radius: 30px;
-        background-color: #ffd85e;
-    }
-
-    .logo {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        max-height: 5%;
-        max-height: 100px;
-    }
-
-    .bottom-navigation-container {
-        position: absolute;
-        bottom: 25px;
-    }
-
-
-</style>*@
-<style>
-
-     html, body {    
-         height: 100%;
-         width: 100%;
-         /*overflow: hidden;*/
-         /*margin: 0;*/
-     }
-    
-
-    .vertical-align {
-        position: relative;
-        top: 50%;
-    }
-    /*
- * Row with equal height columns
- * --------------------------------------------------
- */
     .row-eq-height {
         display: -webkit-box;
         display: -webkit-flex;
         display: -ms-flexbox;
-        display:         flex;
+        display: flex;
     }
 
-
-    .max-height {
-        height: 100%;
+    .vertical-align, #next, #prev{
+        position: relative;
+        top: 50%;
     }
+
+    .rtl {
+        direction: rtl;
+        text-align: right;
+    }
+
+    .gly {
+        vertical-align: middle;
+        text-align: center;
+        font-size: 50px;
+    }
+
+    .slide-highlighted {
+        background-color: blue !important;
+        font-size: 27px !important;
+    }
+
+    .table-responsive {
+        height: 180px;
+    }
+
+    .table-bordered, .table-bordered td, .table-bordered th{
+        border-color: #222222 !important;
+    }
+
+    .table-bordered th {
+        text-align: center;
+    }
+
+    .timetables-container {
+        background-color:rgb(220,228,206);
+    }
+
 </style>
-<html>
+
+<!DOCTYPE html>
+
+<html style="background-color:#383747">
 <head>
-    <meta name="viewport" content="width=device-width"/>
     <title>@ViewBag.Title</title>
 
-    @*<link rel="stylesheet" href="ClientSide/Css/home.css">*@
-    <link rel="stylesheet" href="ClientSide/Css/searchCourses.css">
-    <link rel="stylesheet" href="ClientSide/Css/constraints.css">
-    <link rel="stylesheet" href="ClientSide/Css/jquery-ui-slider-pips.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="~/ClientSide/Css/jquery-ui-slider-pips.css">
     <!--  my font: Lato -->
     <link rel='stylesheet' type='text/css' href='https://fonts.google.com/specimen/Lato'>
-
-
     <!-- plus a jQuery UI theme -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css" />
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="~/ClientSide/Css/searchCourses.css">
+    <link rel="stylesheet" href="~/ClientSide/Css/constraints.css">
+    @*<link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css">*@
 
-    <environment names="Development">
-        <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.css" />
-    </environment>
-
-    <environment names="Staging, Production">
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/node_modules/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only"
-              asp-fallback-test-property="position"
-              asp-fallback-test-value="absolute" />
-    </environment>
-    @*<link rel="stylesheet" href="ClientSide/Css/black-theme-bootstrap.min.css">*@
 </head>
-<body>
-
- 
+<body style="background-color:#ffd85e; border-radius:50px;">
     <div class="container-fluid max-height">
-        <div class="row row-eq-height max-height">
+        <div class="row max-height">
 
-            <div class="col-sm-1  hidden-xs vertical-align">
-                <a onclick="plusSlides(-1)">&#10094;</a>
+            <!-- Left Arrow Navigation -->
+            <div class="col-sm-1 hidden-xs gly max-height">
+                <span id="prev" class="glyphicon  glyphicon-chevron-left  vertical-align" onclick="prevSlide()"></span>
             </div>
 
-            <div class="col-xs-12 col-sm-10 max-height">
-                <div class="row" style="height: 10%; min-height: 50px">
-                    <div class="col-xs-2 col-xs-offset-5 max-height" style="background-color: blue;">
-                        <img class="img-responsive"src="ClientSide/Images/decore/logo.png"/>
-                    </div>
+            <!-- Middle Area -->
+            <div class="col-sm-10 max-height">
+
+                <!-- Logo -->
+                <div class="row" style="height: 10%;">
+                    <img class="max-height center-block " src="~/ClientSide/Images/decore/logo.png">
                 </div>
-                <div class="row max-height">
+
+                <!-- Content Area -->
+                <div class="row" style="height: 80%; overflow-y: auto; overflow-x: hidden" >
                     @RenderBody()
                 </div>
-                
+
+                <!-- Main Area Footer -->
+                <div class="row" style="height: 10%;">
+                    <!-- Buttom Navigation Buttons -->
+                    <div id="slidesButtons" class="btn-group-lg btn-group-justified max-height">
+                        <a class="btn btn-primary" onclick="setCurrentSlide(0)"><b>Select Courses</b></a>
+                        <a class="btn btn-primary" onclick="setCurrentSlide(1)"><b>Choose Constraints</b></a>
+                        <a class="btn btn-primary" onclick="setCurrentSlide(2)"><b>Generate Timetables</b></a>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-sm-1 hidden-xs vertical-align">
-                <a onclick="plusSlides(2)">&#10095;</a>
+            <!-- Right Arrow Navigation -->
+            <div class="col-sm-1 hidden-xs gly max-height">
+                <span id="next" class="glyphicon  glyphicon-chevron-right  vertical-align" onclick="nextSlide()"></span>
             </div>
-
-
         </div>
-
-
     </div>
 
 
@@ -202,116 +166,15 @@
 
     <script type="text/javascript" src="ClientSide/Scripts/searchCoursesHandler.js"></script>
     <script type="text/javascript" src="ClientSide/Scripts/constraintsHandler.js"></script>
+    <script type="text/javascript" src="ClientSide/Scripts/timetables-pagination.js"></script>
+    <script type="text/javascript" src="ClientSide/Scripts/slides-handler.js"></script>
 
-    <script>
-        var slideIndex = 1;
-        setCurrentSlide(slideIndex);
-
-        function plusSlides(n) {
-
-            setCurrentSlide(slideIndex += n);
-        }
-
-        function currentSlide(n) {
-
-            setCurrentSlide(slideIndex = n);
-        }
-
-        function setCurrentSlide(n) {
-            var i, j;
-            var slides = document.getElementsByClassName("mySlides");
-            var dots = document.getElementsByClassName("dot");
-            if (n > slides.length) {
-                slideIndex = 1
-            }
-            if (n < 1) {
-                slideIndex = slides.length
-            }
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-
-            }
-            if (slideIndex === 3) {
-                var IsClashes = false;
-                if ($('#flatCheckBox').is(":checked")) {
-                    // it is checked
-                    IsClashes = true;
-
-                }
-
-                var freeD = $('#freeDays').slider("option", "value");
-                var maxG = $('#maxGap').slider("option", "value");
+<script>
+    
 
 
-                //var idList = JSON.stringify(selectedCoursesList);
-                $.post("Home/PostReDirectGetExample",
-                    {
-                        ids: selectedCoursesList,
-                        clashes: IsClashes,
-                        freeDays: freeD,
-                        maxGap: maxG
-                    },
-                    function (data, status) {
-                        $data = $.parseJSON(data);
 
-                        $.each($data,
-                            function (i, item) {
-                                $c = "";
-                                $c +=
-                                    "<tr><td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
-                                    item.startHour +
-                                    "</td>";
-                                $c +=
-                                    "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
-                                    item.sunday +
-                                    "</td>";
-                                $c +=
-                                    "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
-                                    item.monday +
-                                    "</td>";
-                                $c +=
-                                    "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
-                                    item.tuesday +
-                                    "</td>";
-                                $c +=
-                                    "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
-                                    item.wednesday +
-                                    "</td>";
-                                $c +=
-                                    "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
-                                    item.thursday +
-                                    "</td>";
-                                $c +=
-                                    "<td style='width: 16.66666667%; border-color: #222222; border:solid; border-width: 1px;'>" +
-                                    item.friday +
-                                    "</td></tr>";
-
-                                $('#timetablesTbl').find('tbody').append($c);
-
-                            });
-
-                    });
-
-                /* OPTIONAL FOR PAGINATION EITHER THAT OR BOOTSTAP PAGER */
-                /*
-                $('#timetablesTbl').dataTable( {
-                    "pageLength": 16,
-                    "scrollX": true,
-                    "pagingType": "simple_numbers"
-                } );
-
-                */
-
-            }
-
-
-            slides[slideIndex - 1].style.display = "block";
-            dots[slideIndex - 1].className += " active";
-        }
-    </script>
-
+    
+</script>
 </body>
 </html>

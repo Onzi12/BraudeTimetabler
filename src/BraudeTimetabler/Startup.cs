@@ -62,14 +62,12 @@ namespace BraudeTimetabler
             // add support to External dependencies  like BootStrap & jquery
             app.UseNodeModules(env.ContentRootPath);
 
-            //app.UseMvcWithDefaultRoute();
             app.UseMvc(ConfigureRoutes);
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
         {
             // /Home/Index
-
             routeBuilder.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
         }
     }
