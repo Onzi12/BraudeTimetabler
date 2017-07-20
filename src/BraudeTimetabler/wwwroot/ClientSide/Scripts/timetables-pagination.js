@@ -43,8 +43,7 @@ $.fn.pageMe = function (opts, timetables, ratingLbl) {
     }
 
     pager.find('.page_link:first').addClass('active');
-    pager.find('.prev_link').hide();
-    if (numPages <= 1) {
+    if (numPages < 2) {
         pager.find('.next_link').hide();
     }
     pager.children().eq(1).addClass("active");
@@ -86,13 +85,6 @@ $.fn.pageMe = function (opts, timetables, ratingLbl) {
         var mtemp = $(children).slice(startAt, endOn);
         $(mtemp).show();
 
-
-        if (page >= 1) {
-            pager.find('.prev_link').show();
-        }
-        else {
-            pager.find('.prev_link').hide();
-        }
 
         if (page < (numPages - 1)) {
             pager.find('.next_link').show();

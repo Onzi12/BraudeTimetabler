@@ -64,7 +64,7 @@ namespace Api
             var arr = new List<string[]>(Time.TotalHoursOfDay - 1); // -1: 22:40 will always be empty
             for (int i = 0; i < Time.TotalHoursOfDay - 1; i++) 
             {
-                var row = new string[Time.TotalHoursOfDay + 1];
+                var row = new string[Time.TotalSchoolDaysInWeek + 1];
                 row[0] = Time.IndexHourToString(i);
 
                 for (int j = 0; j < Time.TotalSchoolDaysInWeek; j++)

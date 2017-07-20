@@ -103,7 +103,6 @@
     <!-- ------------------- CONSTRAINTS --------------------- -->
     <div class="mySlides">
         <div id="slide2">
-            @*<div class="form-group"></div>*@
 
             <!--Allow Clashes? -->
             <label style="font-size: 50px">Allow Clashes <input type="checkbox" value="" id="flatCheckBox" style="height: 30px; width: 30px;" name="check"></label>
@@ -146,33 +145,28 @@
 
     <!-- ------------------TIMETABLES----------------- -->
     <div class="mySlides">
-        <div id="slide3">
-            <div class="center-block" style="max-height: 80px; overflow: auto;">
-                <ul class="pagination pagination-lg pager" id="myPager"></ul>
-            </div>
-            <div class="timetables-container">
-                <table class="table table-bordered" id="timetablesTbl">
+
+        <div class="container-fluid" id="timetablesContainer">
+                <table id="timetablesTbl" class="table table-bordered table-condensed rtl" style="width: 100%">
                     <thead>
-                        <tr>
-                            <th class="tbl-header">Hours</th>
-                            <th class="tbl-header">Sunday</th>
-                            <th class="tbl-header">Monday</th>
-                            <th class="tbl-header">Tuesday</th>
-                            <th class="tbl-header">Wednesday</th>
-                            <th class="tbl-header">Thursday</th>
-                            <th class="tbl-header">Friday</th>
-                        </tr>
+                    <tr>
+                        <th class="tbl-header">שעות</th>
+                        <th class="tbl-header">יום א'</th>
+                        <th class="tbl-header">יום ב'</th>
+                        <th class="tbl-header">יום ג'</th>
+                        <th class="tbl-header">יום ד'</th>
+                        <th class="tbl-header">יום ה'</th>
+                        <th class="tbl-header">יום ו'</th>
+                    </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
-
-
-            </div>
-            <div class="container-fluid">
-                <label class="label label-lg label-info label-bigg" style="width: 100%" id="calculatingLbl"></label>
-                <label class="label label-lg label-warning label-bigg center-block" style="width: 100%" id="errorMessageLbl"></label>
-                <label class="label label-lg label-info label-bigg" style="width: 100%" id="ratingLbl">Hii</label>
-            </div>
         </div>
-    </div>
+        <div class="container-fluid" style="position: absolute; top: 50%; transform: translateY(-50%) translateX(-50%); left: 50%;">
+            <label class="label label-lg label-info label-bigg" id="calculatingLbl"></label>
+            <label class="label label-lg label-warning label-bigg center-block"id="errorMessageLbl"></label>
+            <label class="label label-lg label-info label-bigg"id="ratingLbl"></label>
+        </div>
+            
+        </div>
 </div>

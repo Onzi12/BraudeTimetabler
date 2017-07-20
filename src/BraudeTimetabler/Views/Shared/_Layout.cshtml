@@ -10,7 +10,7 @@
         display: flex;
     }
 
-    .vertical-align, #next, #prev{
+    .vertical-align, #next, #prev {
         position: relative;
         top: 50%;
     }
@@ -31,22 +31,17 @@
         font-size: 27px !important;
     }
 
-    .table-responsive {
-        height: 180px;
-    }
-
-    .table-bordered, .table-bordered td, .table-bordered th{
+    .table-bordered, .table-bordered td, .table-bordered th {
         border-color: #222222 !important;
     }
 
-    .table-bordered th {
-        text-align: center;
-    }
+        .table-bordered th {
+            text-align: center;
+        }
 
     .timetables-container {
-        background-color:rgb(220,228,206);
+        background-color: rgb(220,228,206);
     }
-
 </style>
 
 <!DOCTYPE html>
@@ -62,9 +57,10 @@
     <!-- plus a jQuery UI theme -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css" />
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" />
+    @*<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" />*@
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="~/ClientSide/Css/searchCourses.css">
     <link rel="stylesheet" href="~/ClientSide/Css/constraints.css">
     @*<link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css">*@
@@ -88,7 +84,7 @@
                 </div>
 
                 <!-- Content Area -->
-                <div class="row" style="height: 80%; overflow-y: auto; overflow-x: hidden" >
+                <div class="row" style="height: 80%; overflow-y: auto; overflow-x: hidden; position: relative;">
                     @RenderBody()
                 </div>
 
@@ -96,7 +92,7 @@
                 <div class="row" style="height: 10%;">
                     <!-- Buttom Navigation Buttons -->
                     <div id="slidesButtons" class="btn-group-lg btn-group-justified max-height">
-                        <a class="btn btn-primary" onclick="setCurrentSlide(0)"><b>Select Courses</b></a>
+                        <a class="btn btn-primary slide-highlighted" onclick="setCurrentSlide(0)"><b>Select Courses</b></a>
                         <a class="btn btn-primary" onclick="setCurrentSlide(1)"><b>Choose Constraints</b></a>
                         <a class="btn btn-primary" onclick="setCurrentSlide(2)"><b>Generate Timetables</b></a>
                     </div>
@@ -123,16 +119,14 @@
         <script src="ClientSide/Scripts/jquery-ui-slider-pips.js"></script>
 
         <!-- jQuery-dataTables library -->
-        <script src="~/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+        @*<script src="~/node_modules/datatables.net/js/jquery.dataTables.js"></script>*@
 
         <!-- Bootstrap library -->
         <script src="~/node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
-        <!-- Data tables styles? library -->
-        <script src="ClientSide/Scripts/dataTables.bootstrap.js"></script>
     </environment>
 
-    <environment names="Staging, Production">
+    @*<environment names="Staging, Production">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"
                 asp-fallback-src="~/node_modules/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery">
@@ -162,19 +156,20 @@
         </script>
 
 
-    </environment>
+    </environment>*@
 
+    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="ClientSide/Scripts/searchCoursesHandler.js"></script>
     <script type="text/javascript" src="ClientSide/Scripts/constraintsHandler.js"></script>
     <script type="text/javascript" src="ClientSide/Scripts/timetables-pagination.js"></script>
     <script type="text/javascript" src="ClientSide/Scripts/slides-handler.js"></script>
 
-<script>
-    
+    <script>
 
 
 
-    
-</script>
+
+
+    </script>
 </body>
 </html>

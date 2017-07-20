@@ -1,6 +1,7 @@
 ﻿/******************slides handler************************/
 var currentSlideIndex = 0;
 var calculatingLabelInterval = null;
+var datatable = null;
 var noResultsMessage = "No Results. try to relax your constraints.";
 $(document).ready(function() {
     setCurrentSlide(0);
@@ -37,7 +38,7 @@ function setCurrentSlide(newSlideIndex) {
 }
 
 function handleTimetablesSlide() {
-    $("#timetablesTbl > tbody").empty();
+    $('#timetablesContainer').hide();
     $("#myPager").empty();
     $("#errorMessageLbl").hide();
     $("#ratingLbl").text("");
@@ -95,34 +96,45 @@ function clientGenerateTimetablesResponseHandler(data, status) {
         timetables[i] = JSON.parse(data[i]);
     }
 
+    if (datatable === null)
+        datatable = $('#timetablesTbl').DataTable(
+            {
+                "searching": false,
+                "ordering": false,
+                "lengthChange": false,
+                "pageLength": 14,
+                "language":
+                {
+                    "info": "מציג דף _PAGE_ מתוך _PAGES_",
+                    "paginate":
+                    {
+                        "previous": "הקודם",
+                        "first": "הראשון",
+                        "last": "האחרון",
+                        "next": "הבא"
+                    }
+                }
+            });
+
+    datatable.clear();
+
     $.each(timetables,
         function(j, timetable) {
             var timeslots = timetable.timeslotsMatrix;
 
-
+            
             $.each(timeslots,
-                function(i, item) {
-                    var c = "<tr>";
-                    for (var k = 0; k < 7; k++) {
-                        c +=
-                            "<td style='direction: rtl;'>" +
-                            item[k] +
-                            "</td>";
-                    }
-
-                    c += "</tr>";
-
-                    $('#timetablesTbl tbody').append(c);
+                function (i, item) {
+                    datatable.row.add(item);
 
                 }); //end of inner $each
 
 
         }); // end of outer $each 
-    $('#timetablesTbl')
-        .pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 14 },
-            timetables,
-            $("#ratingLbl")
-            );
+
+    datatable.draw();
+    $('#timetablesContainer').show();
+
 
 }
 
