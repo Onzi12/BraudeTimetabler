@@ -51,10 +51,6 @@ namespace Api
             if (backtrackingSolutions.Any())
             {
                 timetables.AddRange(backtrackingSolutions);
-                // remove after project presentation
-                if (!cancellationToken.IsCancellationRequested && geneticAlgorithmRunner.GeneticSolution != null)
-                    timetables.Add(geneticAlgorithmRunner.GeneticSolution);
-                // end of the part to remove
             }
 
             var sortedSolutions = SortByRate(timetables);
