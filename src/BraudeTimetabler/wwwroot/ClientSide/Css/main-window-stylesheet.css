@@ -1,0 +1,43 @@
+﻿html, body, .max-height {
+    height: 100%;
+}
+
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.vertical-align, #next, #prev {
+    position: relative;
+    top: 50%;
+}
+
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.gly {
+    vertical-align: middle;
+    text-align: center;
+    font-size: 50px;
+}
+
+.slide-highlighted {
+    background-color: blue !important;
+    font-size: 27px !important;
+}
+
+.table-bordered, .table-bordered td, .table-bordered th {
+    border-color: #222222 !important;
+}
+
+.table-bordered th {
+    text-align: center;
+}
+
+.timetables-container {
+    background-color: rgb(220,228,206);
+}

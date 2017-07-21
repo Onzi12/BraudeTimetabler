@@ -1,40 +1,19 @@
-/**
- * Created by ASUS_TF on 17/6/2017.
- */
 
-//var allCourses= {};
 var selectedCourse;
 var tableRow;
 var selectedCoursesList = [];
 var removeCrs;
+var hiddenCourses = [];
 
 $(document).ready(function () {
-
-    // $.getJSON("http://localhost/databaseMock.php",
-    //    function (data) {
-    //        allCourses.data = data;
-    //        var tbl_body = document.createElement("tbody");  // create a new table
-    //        tbl_body.id = "rtbody";
-    //        $.each(data, function () {
-    //            var tbl_row = tbl_body.insertRow();
-    //            tbl_row.className = "tbl-row";
-    //            $.each(this, function (k, v) {
-    //                var cell = tbl_row.insertCell();
-    //                cell.appendChild(document.createTextNode(v.toString()));
-    //            })
-
-    //        })
-
-    //        document.getElementById("coursesDataBaseTbl").appendChild(tbl_body);
-    //    });
 
 
     $('#textInput').keyup(function () {
         //split the current value of searchInput
-        var data = this.value.split(" ");
+        var data = this.value.toLowerCase().split(" ");
         //create a jquery object of the rows
         var jo = $("#coursesDataBaseTbl").find("tr");
-        if (this.value == "") {
+        if (this.value === "") {
             jo.show();
             return;
         }
@@ -43,9 +22,9 @@ $(document).ready(function () {
 
         //Recusively filter the jquery object to get results.
         jo.filter(function (i, v) {
-                var $t = $(this);
+                var td = $(this).text().toLowerCase();
                 for (var d = 0; d < data.length; ++d) {
-                    if ($t.is(":contains('" + data[d] + "')")) {
+                    if (td.search(data[d]) >= 0) {
                         return true;
                     }
                 }
@@ -55,70 +34,64 @@ $(document).ready(function () {
             .show();
     });
 
-
     /*-----------------add courses to list---------------------*/
 
-    $('#coursesDataBaseTbl').on('click', 'td', function () {
+    $('#coursesDataBaseTbl').on('click', 'tr', function () {
 
-        tableRow = $(this).closest('tr');
+        var highlightClass = "highlighted";
+        tableRow = $(this);
 
-        $('#coursesDataBaseTbl').find('tr.highlighted').removeClass("highlighted");
-        $('#coursesDataBaseTbl').find('td.highlighted').removeClass("highlighted");
-        tableRow.toggleClass("highlighted");
+        if (tableRow.hasClass(highlightClass)) {
+            tableRow.toggleClass(highlightClass);
+            $('#selectCourseBtn').hide();
+            return;
+        }
 
-        document.getElementById("selectCourseBtn").style.display = document.getElementById("selectCourseBtn").style.display === "block" ? "none" : "block";
-        selectedCourse = tableRow.html();
+        $('#coursesDataBaseTbl').find('tr.highlighted').removeClass(highlightClass);
+        tableRow.toggleClass(highlightClass);
 
+        $('#selectCourseBtn').show();
+        selectedCourse = tableRow;
     });
 
 
     $('#selectCourseBtn').on('click', function () {
 
         $('#coursesDataBaseTbl').find('tr.highlighted').removeClass("highlighted");
-        $('#coursesDataBaseTbl').find('td.highlighted').removeClass("highlighted");
 
-        $('#slctdTbl').find('tbody').append('<tr class="tbl-row rtl">' + selectedCourse + '</tr>');
-
-
-        document.getElementById("selectCourseBtn").style.display = document.getElementById("selectCourseBtn").style.display === "block" ? "none" : "block";
+        $('#slctdTbl').find('tbody').append('<tr class="tbl-row rtl">' + selectedCourse.html() + '</tr>');
 
 
-
+        $('#selectCourseBtn').hide();
 
         var newCourseId = tableRow[0].cells.tableCourseId.innerText;
 
         selectedCoursesList.push(newCourseId);
 
         //remove from table
-        tableRow.remove();
-
-        //add id to list
-        // var newCourseId = $(selectedCourse).find("td").html();
-
-
-
-
-
+        tableRow.hide();
+        hiddenCourses.push(tableRow);
     });
 
 
     /*-----------------remove courses from list---------------------*/
+    $('#slctdTbl').on('click', 'tr', function () {
 
-    $('#slctdTbl').on('click', 'td', function () {
+        var highlightClass = "highlighted";
+        tableRow = $(this);
 
-        tableRow = $(this).closest('tr');
+        if (tableRow.hasClass(highlightClass)) {
+            tableRow.toggleClass(highlightClass);
+            $('#removeCourseBtn').hide();
+            return;
+        }
 
+        $('#slctdTbl').find('tr.highlighted').removeClass(highlightClass);
+        tableRow.toggleClass(highlightClass);
 
-        $('#slctdTbl').find('tr.highlighted').removeClass("highlighted");
-        $('#slctdTbl').find('td.highlighted').removeClass("highlighted");
-        tableRow.toggleClass("highlighted");
+        $('#removeCourseBtn').show();
 
-        document.getElementById("removeCourseBtn").style.display = document.getElementById("removeCourseBtn").style.display === "block" ? "none" : "block";
-
-
-        removeCrs = tableRow.html();
-
-
+        removeCrs = tableRow;
     });
 
 
@@ -126,39 +99,28 @@ $(document).ready(function () {
 
         //remove highlight
         $('#slctdTbl').find('tr.highlighted').removeClass("highlighted");
-        $('#slctdTbl').find('td.highlighted').removeClass("highlighted");
 
-
-        //add back to database
-        $('#coursesDataBaseTbl').find('tbody').append('<tr>' + removeCrs + '</tr>');
-
-        //hide button
-        document.getElementById("removeCourseBtn").style.display = document.getElementById("removeCourseBtn").style.display === "block" ? "none" : "block";
-
-
+        //hide removeCourse button
+        $(this).hide();
 
         //remove from selected table
         tableRow.remove();
 
-
-
         //remove from selected courses list
         var removeThisCourseId = tableRow[0].childNodes[1].innerText;
-
         var index = selectedCoursesList.indexOf(removeThisCourseId);
-
         if (index > -1) {
             selectedCoursesList.splice(index, 1);
         }
 
-
+        //add back to database
+        for (var i = 0; i < hiddenCourses.length; i++) {
+            if (hiddenCourses[i][0].childNodes[1].innerText === removeThisCourseId) {
+                hiddenCourses[i].show();
+                hiddenCourses.splice(i, 1);
+                break;
+            }
+        }
     });
-
-
-
-
-
-
-
 });
 
