@@ -1,8 +1,7 @@
 
 var selectedCourse;
-var tableRow;
 var selectedCoursesList = [];
-var removeCrs;
+var removeCourse;
 var hiddenCourses = [];
 
 $(document).ready(function () {
@@ -12,7 +11,7 @@ $(document).ready(function () {
         //split the current value of searchInput
         var data = this.value.toLowerCase().split(" ");
         //create a jquery object of the rows
-        var jo = $("#coursesDataBaseTbl").find("tr");
+        var jo = $("#coursesDataBaseTbl tbody").find("tr");
         if (this.value === "") {
             jo.show();
             return;
@@ -36,10 +35,10 @@ $(document).ready(function () {
 
     /*-----------------add courses to list---------------------*/
 
-    $('#coursesDataBaseTbl').on('click', 'tr', function () {
+    $('#coursesDataBaseTbl tbody').on('click', 'tr', function () {
 
         var highlightClass = "highlighted";
-        tableRow = $(this);
+        var tableRow = $(this);
 
         if (tableRow.hasClass(highlightClass)) {
             tableRow.toggleClass(highlightClass);
@@ -64,21 +63,21 @@ $(document).ready(function () {
 
         $('#selectCourseBtn').hide();
 
-        var newCourseId = tableRow[0].cells.tableCourseId.innerText;
+        var newCourseId = selectedCourse[0].cells.tableCourseId.innerText;
 
         selectedCoursesList.push(newCourseId);
 
         //remove from table
-        tableRow.hide();
-        hiddenCourses.push(tableRow);
+        selectedCourse.hide();
+        hiddenCourses.push(selectedCourse);
     });
 
 
     /*-----------------remove courses from list---------------------*/
-    $('#slctdTbl').on('click', 'tr', function () {
+    $('#slctdTbl tbody').on('click', 'tr', function () {
 
         var highlightClass = "highlighted";
-        tableRow = $(this);
+        var tableRow = $(this);
 
         if (tableRow.hasClass(highlightClass)) {
             tableRow.toggleClass(highlightClass);
@@ -91,7 +90,7 @@ $(document).ready(function () {
 
         $('#removeCourseBtn').show();
 
-        removeCrs = tableRow;
+        removeCourse = tableRow;
     });
 
 
@@ -104,10 +103,10 @@ $(document).ready(function () {
         $(this).hide();
 
         //remove from selected table
-        tableRow.remove();
+        removeCourse.remove();
 
         //remove from selected courses list
-        var removeThisCourseId = tableRow[0].childNodes[1].innerText;
+        var removeThisCourseId = removeCourse[0].childNodes[1].innerText;
         var index = selectedCoursesList.indexOf(removeThisCourseId);
         if (index > -1) {
             selectedCoursesList.splice(index, 1);

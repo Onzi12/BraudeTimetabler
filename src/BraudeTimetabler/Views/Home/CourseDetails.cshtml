@@ -1,45 +1,54 @@
 ﻿@model Course
 
 @{
-    ViewBag.Title = $"פרטי הקורס {Model.Name}";
+    Layout = null;
 }
+<!DOCTYPE html>
 
+<html >
+<head>
+    <title>$"פרטי הקורס {Model.Name}"</title>
 
-
-    <section class="panel panel-primary rtl">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body style="background-color: #ffd85e;">
+<div class="container" style="direction: rtl; text-align: right;">
+    <section class="panel panel-primary">
         <div>
-            @*<a asp-action="@nameof(HomeController.Index)">חזור</a>*@
-            <a class="btn btn-primary" href="javascript:window.history.back()">חזור</a>
-            @*<form method="post" asp-action="@nameof(HomeController.CourseDetails)">
-                    <input type="submit" value="חזור מהפורם" />
-                </form>*@
+            <button class="btn btn-primary" onclick="window.close();">סגור</button>
         </div>
-
-
         <h1 class="panel-heading">
             <ins>פרטי קורס: @Model.Name</ins>
         </h1>
-            <div class="panel-body">
-                @foreach (var classType in Model.ClassTypes)
+        <div class="panel-body">
+            @foreach (var classType in Model.ClassTypes)
+            {
+                <h2>
+                    <ins>קבוצות @classType.Type</ins>
+                </h2>
+                var i = 1;
+                foreach (var classTypeGroup in classType.Groups)
                 {
-                    <h2><ins>קבוצות @classType.Type</ins>
-                    </h2>
-                    var i = 1;
-                    foreach (var classTypeGroup in classType.Groups)
+                    <p>
+                        <b>@(i++). מרצה:</b> @classTypeGroup.Lecturer, <b>מספר קבוצה:</b>@classTypeGroup.Id <br />
+                    </p>
+
+                    foreach (var courseEvent in classTypeGroup.Events)
                     {
-                        <p>
-                            <b>@(i++). מרצה:</b> @classTypeGroup.Lecturer, <b>מספר קבוצה:</b>@classTypeGroup.Id <br/>
-                        </p>
-
-                        foreach (var courseEvent in classTypeGroup.Events)
-                        {
-                            <p style="padding-right: 30px">@courseEvent.Day.ToHebrew(), מ @courseEvent.StartHour עד @courseEvent.EndHour, ב @courseEvent.Room</p>
-                        }
+                        <p style="padding-right: 30px">@courseEvent.Day.ToHebrew(), מ @courseEvent.StartHour עד @courseEvent.EndHour, ב @courseEvent.Room</p>
                     }
-                    <hr style="width: 90%; text-align: right; margin-right: 0;"/>
                 }
-            </div>
-        </section>
-    
+                <hr style="width: 90%; text-align: right; margin-right: 0;" />
+            }
+        </div>
+    </section>
+  
+</div>
+  
+<script src="~/node_modules/jquery/dist/jquery.js"></script>
+<script src="~/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+</body>
+</html>
 
-                    
+

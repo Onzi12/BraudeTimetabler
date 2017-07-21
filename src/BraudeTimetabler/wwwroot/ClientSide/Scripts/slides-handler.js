@@ -18,23 +18,30 @@ function nextSlide() {
 }
 
 function setCurrentSlide(newSlideIndex) {
-    var slides = document.getElementsByClassName("mySlides");
+    var slides = $(".mySlides");
     var slidesButtons = $("#slidesButtons a");
    
-    $(slidesButtons[currentSlideIndex]).removeClass("slide-highlighted");
-    currentSlideIndex = (slides.length + newSlideIndex) % slides.length;
-    $(slidesButtons[currentSlideIndex]).addClass("slide-highlighted");
+    newSlideIndex = (slides.length + newSlideIndex) % slides.length;
 
-    for (var i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
+    if (newSlideIndex === currentSlideIndex)
+        return;
+
+    slidesButtons.eq(currentSlideIndex).removeClass("slide-highlighted");
+    slidesButtons.eq(newSlideIndex).addClass("slide-highlighted");
+    currentSlideIndex = newSlideIndex;
 
     if (currentSlideIndex === 2) {
         handleTimetablesSlide();
     }
 
+    for (var i = 0; i < slides.length; i++) {
+        if (i === currentSlideIndex) {
+            slides.eq(i).show();
+        } else {
+            slides.eq(i).hide();
+        }
+    }
 
-    slides[currentSlideIndex].style.display = "block";
 }
 
 function handleTimetablesSlide() {
