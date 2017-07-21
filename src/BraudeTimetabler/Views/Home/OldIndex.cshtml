@@ -1,7 +1,7 @@
 ﻿@model HomePageViewModel
      
 @{
-    ViewBag.Title = "Onzi Learning MVC.Net";
+    ViewBag.Title = "Braude Timetabler";
 }                                               
 
 <div>    
@@ -25,18 +25,14 @@
     
     <div style="float: left; width: 50%;">
         <h2>Selected Courses</h2>
-        <table>
-
-            @foreach (var course in Model.SelectedCourses)
-            {
-                <tr>
-                    <td>
-                        <a class="btn btn-primary" asp-action="CourseDetails" asp-route-courseId="@course.Id">פרטים</a>
-                        @course.Name
-                    </td>
-                    <td>@course.Id</td>
-                </tr>
-            }
+        <table id="slctdTbl">
+            <thead>
+            <tr>
+                <th class="tbl-header text-center">Course Id</th>
+                <th class="tbl-header text-center">Course Name</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
         </table>
     </div>
 </div>
