@@ -3,243 +3,170 @@
 @{
     ViewBag.Title = "Braude Timetabler";
 }
-
-<style>
-    #allCourses, #selectedCourses {
-        overflow-y: auto;
-        max-height: 350px;
-        min-height: 350px;
-        background-color: white;
-    }
-
-    .course-hover:hover {
-        background-color: red;
-    }
-
-    .add-course {
-        visibility: hidden;
-        position: absolute;
-        left: 10px;
-    }
-
-    .add-course:hover {
-        visibility: visible;
-    }
-</style>
-<div class="slideshow-container">
+<div class="slideshow-container" style="height: 100%">
 
     <!-- ------------------- SEARCH COURSES --------------------- -->
-    <div class="mySlides rtl">
-        @*<div class="container-fluid">
-            <div class="row">
-                <div class="col-xs-3 col-sm-6">
-                    <h2 style="margin-top:0">קורסים שנבחרו</h2>
-                </div>
-                <div class="col-xs-9 col-sm-6">
-                    <h2 style="display: inline">בחר קורס/ים  </h2>
-                    <span style="background-color: white; border: 1px solid black; padding: 5px;">
-                        <input type="text" id="textInput" onkeyup="filterCourses()" placeholder="שם\קוד קורס" style="border: 0; background-color: transparent;">
-                        <span class="glyphicon glyphicon-search"></span>
-                        <script>
-                            function filterCourses() {
-                                var filter = $('#textInput').val().trim().toLowerCase();
-                                var c = $('#allCourses > *');
-                                for (var i = 0; i < c.length; ++i) {
-                                    var child = c[i];
-                                    if (filter.length === 0 || child.innerText.toLowerCase().search(filter) > 0) {
-                                        child.style.display = "block";
-                                    } else {
-                                        child.style.display = "none";
-                                    }
-                                }
-                            }
-                        </script>
-                    </span>
-                </div>
-            </div>
+    <div class="mySlides" style="height: 100%">
+        <div id="slide1" style="height: 100%">
 
-
-            <div class="row">
-                <div class="col-xs-3 col-sm-6">
-                    <div id="selectedCourses" class="list-group">
-                    </div>
-                </div>
-                <div class="col-xs-9 col-sm-6">
-                    <div id="allCourses" class="list-group">
-                        @foreach (var course in Model.AllCourses)
-                        {
-                            <span class="list-group-item course-hover"
-                                  onmouseover="$('#ff').visibility = 'visible';" style="position: relative">
-                                <a class="btn btn-primary" asp-action="CourseDetails" asp-route-courseId="@course.Id">פרטים</a>
-                                @course.Name - @course.Id
-                                <a class="add-course" id="ff" onclick="$('#selectedCourses').append(this);">Add</a>
-                            </span>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>*@
-
-@*<div id="slide1" style="height: 100%">
-
-        <div class="row" style="height: 100%">
-            <div class="col-xs-7 col-md-7 " style="height: 100%">
-                <!-- left side -->
-                <div class="row" style="height: 100%">
-                    <div class="col-xs-9" style="height: 100%">
-                        <div class="row" id="top" style="height: 25%">
-                            <div class="col-xs-12 " style="height: 100%">
-                                <div class="row" style="height: 100%">
-                                    <div class="col-xs-9 col-xs-offset-1 " style="height: 100%">
-                                        <img src="ClientSide/Images/decore/search.png" class="img-responsive ">
+            <div class="row" style="height: 100%">
+                <div class="col-xs-7 col-md-7 " style="height: 100%">
+                    <!-- left side -->
+                    <div class="row" style="height: 100%">
+                        <div class="col-xs-9" style="height: 100%">
+                            <div class="row" id="top" style="height: 25%">
+                                <div class="col-xs-12 " style="height: 100%">
+                                    <div class="row" style="height: 100%">
+                                        <div class="col-xs-9 col-xs-offset-1 " style="height: 100%">
+                                            <img src="ClientSide/Images/decore/search.png" class="img-responsive ">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row" id="inputBoxes" style="height: 30%; position: relative; top: -40%;">
-                                    <div class="col-xs-10" style="height: 100%">
-                                        <div class="input-group stylish-input-group" style="height: 100%">
-                                            <input class="form-control" id="textInput" placeholder="course Name \ Id" style="height: 100%">
-                                            <span class="input-group-addon" style="height: 100%">
-                                                <button type="submit">
-                                                    <span class="glyphicon glyphicon-search" style="height: 100%"></span>
-                                                </button>
-                                            </span>
+                                    <div class="row" id="inputBoxes" style="height: 30%; position: relative; top: -40%;">
+                                        <div class="col-xs-10" style="height: 100%">
+                                            <div class="input-group stylish-input-group" style="height: 100%">
+                                                <input class="form-control" id="textInput" placeholder="course Name \ Id" style="height: 100%">
+                                                <span class="input-group-addon" style="height: 100%">
+                                                    <button type="submit">
+                                                        <span class="glyphicon glyphicon-search" style="height: 100%"></span>
+                                                    </button>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row" id="bottom" style="height: 75%">
-                            <div class="col-xs-10 Left-bottom-container max-height">
-                                <div class="table-responsive" style="height: inherit; overflow-y: scroll;">
-                                    <table class="table-condensed" id="coursesDataBaseTbl" style="width: 100%;">
-                                        <thead>
-                                        <tr>
-                                            <th class="tbl-header text-center">Course Id</th>
-                                            <th class="tbl-header text-center ">Course Name</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach (var course in Model.AllCourses)
-                                        {
-                                            <tr class="tbl-row rtl">
-                                                <td style="width: 25%;" id="tableCourseId">@course.Id</td>
-                                                <td style="width: 75%">
-                                                    <a asp-action="CourseDetails"
-                                                       asp-controller="Home"
-                                                       asp-route-courseId="@course.Id">
-                                                        <span class="glyphicon glyphicon-info-sign"
-                                                              style="font-size: 15px;"></span>
-                                                    </a> @course.Name
-                                                </td>
-                                            </tr>
-                                        }
-                                        </tbody>
-                                    </table>
+                            <div class="row" id="bottom" style="height: 75%">
+                                <div class="col-xs-10 Left-bottom-container max-height">
+                                    <div class="table-responsive" style="height: inherit; overflow-y: scroll;">
+                                        <table class="table-condensed" id="coursesDataBaseTbl" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="tbl-header text-center">Course Id</th>
+                                                    <th class="tbl-header text-center ">Course Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var course in Model.AllCourses)
+                                                {
+                                                    <tr class="tbl-row rtl">
+                                                        <td style="width: 25%;" id="tableCourseId">@course.Id</td>
+                                                        <td style="width: 75%">
+                                                            <a asp-action="CourseDetails"
+                                                               asp-controller="Home"
+                                                               asp-route-courseId="@course.Id">
+                                                                <span class="glyphicon glyphicon-info-sign"
+                                                                      style="font-size: 15px;"></span>
+                                                            </a> @course.Name
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xs-3 col-height">
-                        <input type="image" id="selectCourseBtn" src="ClientSide/Images/buttons/right_double_arrow.png"
-                               class="img-responsive right-dbl-arrw-btn " style="display: none; position: relative; top: 300px;">
-                        <input type="image" id="removeCourseBtn" src="ClientSide/Images/buttons/left_double_arrow.png"
-                               class=" img-responsive right-dbl-arrw-btn " style="display: none; position: relative; top: 350px;">
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-5 col-md-5 " style="height: 100%">
-                <!-- right side -->
-                <div class="row" style="height: 20%">
-                    <div class="col-xs-9 col-xs-offset-1 ">
-                        <img src="ClientSide/Images/decore/selected.png" class="img-responsive" style="margin-bottom: 3%">
+                        <div class="col-xs-3 col-height">
+                            <input type="image" id="selectCourseBtn" src="ClientSide/Images/buttons/right_double_arrow.png"
+                                   class="img-responsive right-dbl-arrw-btn " style="display: none; position: relative; top: 300px;">
+                            <input type="image" id="removeCourseBtn" src="ClientSide/Images/buttons/left_double_arrow.png"
+                                   class=" img-responsive right-dbl-arrw-btn " style="display: none; position: relative; top: 350px;">
+                        </div>
                     </div>
                 </div>
-                <div class="row" style="height: 80%">
-                    <div class="col-xs-10 Right-bottom-container" style="height: 100%">
-                        <div class="table-responsive" style="overflow-y: scroll; height: inherit">
-                            <table class="table" id="slctdTbl">
-                                <thead>
-                                <tr>
-                                    <th class="tbl-header text-center">Course Id</th>
-                                    <th class="tbl-header text-center">Course Name</th>
-                                </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+                <div class="col-xs-5 col-md-5 " style="height: 100%">
+                    <!-- right side -->
+                    <div class="row" style="height: 20%">
+                        <div class="col-xs-9 col-xs-offset-1 ">
+                            <img src="ClientSide/Images/decore/selected.png" class="img-responsive" style="margin-bottom: 3%">
+                        </div>
+                    </div>
+                    <div class="row" style="height: 80%">
+                        <div class="col-xs-10 Right-bottom-container" style="height: 100%">
+                            <div class="table-responsive" style="overflow-y: scroll; height: inherit">
+                                <table class="table" id="slctdTbl">
+                                    <thead>
+                                        <tr>
+                                            <th class="tbl-header text-center">Course Id</th>
+                                            <th class="tbl-header text-center">Course Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>*@
-<!-- ------------------- CONSTRAINTS --------------------- -->
-<div class="mySlides">
-    <div id="slide2">
+    </div>
+    <!-- ------------------- CONSTRAINTS --------------------- -->
+    <div class="mySlides">
+        <div id="slide2">
 
-        <!--Allow Clashes? -->
-        <label style="font-size: 50px">Allow Clashes <input type="checkbox" value="" id="flatCheckBox" style="height: 30px; width: 30px;" name="check"></label>
-        <br />
-        <br />
-        <br />
-        <br />
-        <!--Max Gap -->
-        <div class="row row-eq-height">
+            <!--Allow Clashes? -->
+            <label style="font-size: 50px">Allow Clashes <input type="checkbox" value="" id="flatCheckBox" style="height: 30px; width: 30px;" name="check"></label>
+            <br />
+            <br />
+            <br />
+            <br />
+            <!--Max Gap -->
+            <div class="row row-eq-height">
 
-            <div class="col-xs-5">
-                <label style="font-size: 50px" class="constraint-label">Max Gap:</label>
-            </div>
-            <div class="col-xs-6">
-                <div class="slider" style="position: relative; top:40%;" id="maxGap">
+                <div class="col-xs-5">
+                    <label style="font-size: 50px" class="constraint-label">Max Gap:</label>
                 </div>
+                <div class="col-xs-6">
+                    <div class="slider" style="position: relative; top:40%;" id="maxGap">
+                    </div>
 
-            </div>
-        </div>
-        <br />
-        <br />
-        <br />
-        <!-- Min Free Days -->
-        <div class="row row-eq-height">
-
-            <div class="col-xs-5">
-                <label style="font-size: 50px" class="constraint-label">Min Free Days:</label>
-            </div>
-            <div class="col-xs-6">
-                <div class="slider" style="position: relative; top:40%;" id="freeDays">
                 </div>
-
             </div>
+            <br />
+            <br />
+            <br />
+            <!-- Min Free Days -->
+            <div class="row row-eq-height">
+
+                <div class="col-xs-5">
+                    <label style="font-size: 50px" class="constraint-label">Min Free Days:</label>
+                </div>
+                <div class="col-xs-6">
+                    <div class="slider" style="position: relative; top:40%;" id="freeDays">
+                    </div>
+
+                </div>
+            </div>
+
         </div>
-
-    </div>
-</div>
-
-
-
-<!-- ------------------TIMETABLES----------------- -->
-<div class="mySlides">
-
-    <div class="container-fluid" id="timetablesContainer">
-        <table id="timetablesTbl" class="table table-bordered table-condensed rtl" style="width: 100%">
-            <thead>
-                <tr>
-                    <th class="tbl-header">שעות</th>
-                    <th class="tbl-header">יום א'</th>
-                    <th class="tbl-header">יום ב'</th>
-                    <th class="tbl-header">יום ג'</th>
-                    <th class="tbl-header">יום ד'</th>
-                    <th class="tbl-header">יום ה'</th>
-                    <th class="tbl-header">יום ו'</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-    <div class="container-fluid" style="position: absolute; top: 50%; transform: translateY(-50%) translateX(-50%); left: 50%;">
-        <label class="label label-lg label-info label-bigg" id="calculatingLbl"></label>
-        <label class="label label-lg label-warning label-bigg center-block" id="errorMessageLbl"></label>
-        <label class="label label-lg label-info label-bigg" id="ratingLbl"></label>
     </div>
 
-</div>
+
+
+    <!-- ------------------TIMETABLES----------------- -->
+    <div class="mySlides">
+
+        <div class="container-fluid" id="timetablesContainer">
+                <table id="timetablesTbl" class="table table-bordered table-condensed rtl" style="width: 100%">
+                    <thead>
+                    <tr>
+                        <th class="tbl-header">שעות</th>
+                        <th class="tbl-header">יום א'</th>
+                        <th class="tbl-header">יום ב'</th>
+                        <th class="tbl-header">יום ג'</th>
+                        <th class="tbl-header">יום ד'</th>
+                        <th class="tbl-header">יום ה'</th>
+                        <th class="tbl-header">יום ו'</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+        </div>
+        <div class="container-fluid" style="position: absolute; top: 50%; transform: translateY(-50%) translateX(-50%); left: 50%;">
+            <label class="label label-lg label-info label-bigg" id="calculatingLbl"></label>
+            <label class="label label-lg label-warning label-bigg center-block"id="errorMessageLbl"></label>
+            <label class="label label-lg label-info label-bigg"id="ratingLbl"></label>
+        </div>
+            
+        </div>
 </div>
