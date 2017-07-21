@@ -6,9 +6,10 @@ namespace Api
     [DebuggerDisplay("{Type}")]
     public class ClassType
     {
-        public ClassType(string classType, List<Group> groups = null)
+        public ClassType(string classType, List<Group> groups = null, bool isMandatory = true)
         {
             Type = classType;
+            IsMandatory = isMandatory;
             if (groups == null)
             {
                 groups = new List<Group>();
@@ -27,6 +28,8 @@ namespace Api
         }
 
         public Course Course { get; set; }
+
+        public bool IsMandatory { get; }
 
         public override string ToString()
         {

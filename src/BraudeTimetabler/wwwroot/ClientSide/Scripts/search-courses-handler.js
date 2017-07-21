@@ -9,7 +9,7 @@ $(document).ready(function () {
 
     $('#textInput').keyup(function () {
         //split the current value of searchInput
-        var data = this.value.toLowerCase().split(" ");
+        var searchString = this.value.trim().toLowerCase();
         //create a jquery object of the rows
         var jo = $("#coursesDataBaseTbl tbody").find("tr");
         if (this.value === "") {
@@ -21,11 +21,9 @@ $(document).ready(function () {
 
         //Recusively filter the jquery object to get results.
         jo.filter(function (i, v) {
-                var td = $(this).text().toLowerCase();
-                for (var d = 0; d < data.length; ++d) {
-                    if (td.search(data[d]) >= 0) {
-                        return true;
-                    }
+                var cell = $(this).text().toLowerCase();
+                if (cell.search(searchString) >= 0) {
+                    return true;
                 }
                 return false;
             })

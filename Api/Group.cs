@@ -9,16 +9,15 @@ namespace Api
     {
         public Group()
         { }
-        public Group(string id, string lecturer, GroupEvent[] events, bool isMantadory = true)
+        public Group(string id, string lecturer, GroupEvent[] events)
         {
             
             this.Id = id;
             Lecturer = lecturer;
             Events = events;
-            IsMandatory = isMantadory;
         }
 
-        public Group(string id, string lecturer, GroupEvent groupEvent, bool isMantadory = true) : this(id, lecturer, new[] { groupEvent }, isMantadory)
+        public Group(string id, string lecturer, GroupEvent groupEvent) : this(id, lecturer, new[] { groupEvent })
         {
         }
 

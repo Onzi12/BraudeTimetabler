@@ -116,7 +116,8 @@ namespace Api
 
                     if (courseGroups.Any())
                     {
-                        var courseClassType = new ClassType(classTypeName, courseGroups);
+                        var isMandatory = classTypeName != "סדנה";
+                        var courseClassType = new ClassType(classTypeName, courseGroups, isMandatory);
                         courseClassTypes.Add(courseClassType);
                     }
                 }

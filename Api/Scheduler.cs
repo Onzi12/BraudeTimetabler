@@ -101,7 +101,8 @@ namespace Api
                 }
 
                 var tempTimetable = instantiation.Copy();
-                if (constraints.IsConsistent(tempTimetable, value))
+                tempTimetable.Add(value);
+                if (constraints.IsConsistent(tempTimetable, false))
                 {
                     BacktrackingAllSolutions(variables, tempTimetable, allSolutions, index, constraints, cancellationToken);
                 }
@@ -110,7 +111,7 @@ namespace Api
 
         private IEnumerable<ClassType> GetAllClassTypes(System.Collections.Generic.IList<Course> courses)
         {
-            return courses.SelectMany(course => course.ClassTypes); 
+            return courses.SelectMany(course => course.ClassTypes).Where(classType => classType.IsMandatory); 
         }
 
         private List<ClassType> ApplyMrvHeuristic(IEnumerable<ClassType> allCoursesClassTypeGroups)
