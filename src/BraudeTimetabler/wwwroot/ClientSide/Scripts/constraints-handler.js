@@ -5,11 +5,11 @@ $(document).ready(function() {
     $(".slider").each(function() {
         $(this).slider({
                 max: 5,
-                values: [defaultValue++]
+                value: [defaultValue++]
             })
             .slider("pips",
                 {
                     rest: "label"
                 });
     });
-})
+});

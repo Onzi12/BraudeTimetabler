@@ -5,7 +5,7 @@ namespace Api
 {
     public class MaxGapBetweenClassesConstraint : ConstraintBase
     {
-        private int maxGap;
+        private readonly int maxGap;
         public MaxGapBetweenClassesConstraint(int maxGap) : base(true)
         {
             this.maxGap = maxGap;
