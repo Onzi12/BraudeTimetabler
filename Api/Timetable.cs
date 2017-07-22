@@ -10,16 +10,13 @@ namespace Api
 {
     public class Timetable : IEnumerable<Group>, IComparer<Timetable>, IEqualityComparer<Timetable>, IComparable<Timetable>, IFitness
     {
-        public bool IsGeneticSolution { get; }
-
         public TimeSlot[,] TimeSlotsTimetable
         {
             get;
         }
 
-        public Timetable(IEnumerable<Group> groups = null, bool isGeneticSolution = false, double rating = double.MaxValue)
+        public Timetable(IEnumerable<Group> groups = null, double rating = double.MaxValue)
         {
-            IsGeneticSolution = isGeneticSolution;
             if (groups == null)
             {
                 groups = Enumerable.Empty<Group>();
@@ -59,25 +56,32 @@ namespace Api
 
         private readonly List<Group> courseGroups;
 
-        public string ExportToJason()
+        public string ExportToJson()
         {
-            var arr = new List<string[]>(Time.TotalHoursOfDay - 1); // -1: 22:40 will always be empty
-            for (int i = 0; i < Time.TotalHoursOfDay - 1; i++) 
+            var arr = new List<string[]>(Time.TotalHoursOfDay); 
+            for (int i = 0; i < Time.TotalHoursOfDay; i++) 
             {
                 var row = new string[Time.TotalSchoolDaysInWeek + 1];
-                row[0] = Time.IndexHourToString(i);
 
+                bool shouldAddTime = false;
                 for (int j = 0; j < Time.TotalSchoolDaysInWeek; j++)
                 {
+                    var slotString = GetSlotToString(i, j);
+                    shouldAddTime |= slotString != string.Empty;
                     row[j + 1] = GetSlotToString(i, j);
                 }
+
+                var timeString = string.Empty;
+                if (shouldAddTime)
+                {
+                timeString = $"{Time.IndexHourToString(i)}-{Time.IndexHourToString(i, true)}";
+                }
+                row[0] = timeString;
+
                 arr.Add(row);
             }
 
-            var jason = new JavaScriptSerializer().Serialize(new { timeslotsMatrix = arr, IsGeneticSolution, Rating});
-            Console.WriteLine(jason);
-            
-            return jason;
+            return new JavaScriptSerializer().Serialize(new { timeslotsMatrix = arr, Rating});
         }
 
         private string GetSlotToString(int i, int j)

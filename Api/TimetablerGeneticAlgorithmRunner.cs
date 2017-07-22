@@ -41,7 +41,7 @@ namespace Api
                 groups.Add(group);
             }
             
-            return new Timetable(groups, true, c.Fitness * -1 ?? double.MaxValue);
+            return new Timetable(groups, c.Fitness * -1 ?? double.MaxValue);
         }
 
         private double TimetablerFitnessFunction(IChromosome c)

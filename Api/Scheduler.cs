@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Remoting.Channels;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using C5;
-using GeneticSharp.Extensions.Mathematic;
 
 namespace Api
 {
@@ -21,8 +17,6 @@ namespace Api
 
             //allSolutions = MaxHeap
             var backtrackingSolutions = new IntervalHeap<Timetable>(200);
-
-            //TODO: Genetic algorithm
 
             // BT(Variables, {}, Domains, allSolutions)
             var cancellationTokenSource = new CancellationTokenSource();

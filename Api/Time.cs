@@ -25,7 +25,7 @@ namespace Api
             get;
         }
 
-        public static int TotalHoursOfDay => 15;
+        public static int TotalHoursOfDay => 14;
         public static int TotalSchoolDaysInWeek => 6;
 
         #region Comparison operators And Equals
@@ -86,9 +86,9 @@ namespace Api
             return $"{Hour:00}:{Minute:00}"; // time with leading zeros 
         }
 
-        public static string IndexHourToString(int i)
+        public static string IndexHourToString(int i, bool getEndTime = false)
         {
-            return TimeFactory.FromIndex(i).ToString();
+            return TimeFactory.FromIndex(i, getEndTime).ToString();
         }
     }
 }

@@ -64,7 +64,7 @@ namespace BraudeTimetabler.Controllers
 
                 if (model.Ids == null)
                 {
-                    return Content(string.Empty); // TODO: check user picked courses in client
+                    return Content(string.Empty);
                 }
 
                 foreach (var id in model.Ids)
@@ -83,7 +83,7 @@ namespace BraudeTimetabler.Controllers
                 var solutions = scheduler.SolveSssp(selectedCourses, constraints);
 
                 var response = solutions
-                    .Select(s => s.ExportToJason())
+                    .Select(s => s.ExportToJson())
                     .ToArray();
 
                 return Json(response);

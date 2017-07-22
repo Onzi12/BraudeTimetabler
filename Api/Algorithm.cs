@@ -30,7 +30,7 @@ namespace Api
             Console.WriteLine(allSolutions.Count());
             foreach (var solution in allSolutions)
             {
-                solution.ExportToJason();
+                solution.ExportToJson();
                 if (constraints.IsConsistent(solution, solution.First()) == false)
                 {
                     throw new Exception();
