@@ -1,12 +1,15 @@
 
-$(document).ready(function(){
+$(document).ready(function() {
 
-$(".slider")
-    .slider({
-        max: 5
-    })
-    .slider("pips", {
-        rest: "label"
+    var defaultValue = 2;
+    $(".slider").each(function() {
+        $(this).slider({
+                max: 5,
+                values: [defaultValue++]
+            })
+            .slider("pips",
+                {
+                    rest: "label"
+                });
     });
-
-});
+})

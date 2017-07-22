@@ -4,3 +4,17 @@
     font-size: 50px;
 }
 
+.ui-slider-handle {
+    border: 10px solid  rgb(72,189,161) !important;
+}
+                            
+.ui-slider-pip {
+    top: 20px !important;
+    color: blue !important;
+}
+.ui-slider-label {
+    top: 10px !important;
+    color: black;
+    font-size: 23px;
+}
+
