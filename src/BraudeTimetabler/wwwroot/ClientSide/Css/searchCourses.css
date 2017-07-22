@@ -1,17 +1,9 @@
 
-/*/**{
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-}*/
-
 input{
     border-radius: 15px;
-    height:100%;
     background-color: rgb(220,228,206);
     font-size: 1em;
     font-family: 'Lato', sans-serif;
-
 }
 
 td,th,tr{
