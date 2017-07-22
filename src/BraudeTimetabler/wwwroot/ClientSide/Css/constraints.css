@@ -18,3 +18,11 @@
     font-size: 23px;
 }
 
+.ui-slider-pip-initial {
+    font-weight: normal !important;
+}
+
+.ui-slider-pip-selected {
+    font-weight: bold !important;
+}
+
